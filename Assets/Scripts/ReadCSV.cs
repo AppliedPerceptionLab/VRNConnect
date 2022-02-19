@@ -146,7 +146,12 @@ public class ReadCSV : MonoBehaviour
         if (showEdges)
         {
             GameObject edge = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-            edge.GetComponent<Renderer>().material.SetColor("_Color", Color.black);
+            //edge.GetComponent<MeshRenderer>().material = Resources.Load("Materials/SphereR.mat", typeof(Material)) as Material;
+            //Using a material from assets with GPU instancing on
+            edge.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/SphereR");
+            edge.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.black);
+            edge.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            edge.GetComponent<MeshRenderer>().receiveShadows = false;
             edge.name = name;
             edge.transform.position = start + (offset / 2.0f);
             //edge.transform.localScale = new Vector3(strength, offset.magnitude, strength);
@@ -170,7 +175,10 @@ public class ReadCSV : MonoBehaviour
                     //temp = Instantiate(objects[n.nodeId%2]);
                     temp = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                     temp.name = n.regionName;
-                    temp.GetComponent<Renderer>().material.SetColor("_Color", new Color(n.Red / 255f, n.Green / 255f, n.Blue / 255f, n.Alpha / 255f));
+                    //temp.GetComponent<MeshRenderer>().material = Resources.Load("Materials/SphereB.mat", typeof(Material)) as Material;
+                    //Using a material from assets with GPU instancing on
+                    temp.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/SphereB");
+                    temp.GetComponent<MeshRenderer>().material.SetColor("_Color", new Color(n.Red / 255f, n.Green / 255f, n.Blue / 255f, n.Alpha / 255f));
                     temp.transform.localScale = sphereSize;
                     temp.transform.position = scaleVector3(new Vector3(n.xCog, n.yCog, n.zCog));
                     //make each node a child of the current GameObject
