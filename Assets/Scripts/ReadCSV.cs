@@ -179,6 +179,7 @@ public class ReadCSV : MonoBehaviour
                     //Using a material from assets with GPU instancing on
                     temp.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/SphereB");
                     temp.GetComponent<MeshRenderer>().material.SetColor("_Color", new Color(n.Red / 255f, n.Green / 255f, n.Blue / 255f, n.Alpha / 255f));
+                    temp.GetComponent<MeshRenderer>().receiveShadows = false;
                     temp.transform.localScale = sphereSize;
                     temp.transform.position = scaleVector3(new Vector3(n.xCog, n.yCog, n.zCog));
                     //make each node a child of the current GameObject
