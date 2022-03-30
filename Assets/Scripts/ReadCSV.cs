@@ -9,7 +9,7 @@ public class ReadCSV : MonoBehaviour
     public Vector3 scale = new Vector3(50.0f, 50.0f, 50.0f);
     public Vector3 rotation = new Vector3(90.0f, 0.0f, 0.0f);
     public Vector3 sphereSize = new Vector3(0.05f, 0.05f, 0.05f);
-    public List<Node> nodes = new List<Node>();
+    public static List<Node> nodes = new List<Node>();
     public Boolean showNodes = true;
     public Boolean showEdges = true;
 
@@ -185,7 +185,7 @@ public class ReadCSV : MonoBehaviour
                     //Using a material from assets with GPU instancing on
                     temp.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/SphereB");
                     temp.GetComponent<MeshRenderer>().material.SetColor("_Color", new Color(n.Red / 255f, n.Green / 255f, n.Blue / 255f, n.Alpha / 255f));
-                    temp.GetComponent<MeshRenderer>().receiveShadows = false;
+                    //temp.GetComponent<MeshRenderer>().receiveShadows = false;
                     temp.transform.localScale = sphereSize;
                     temp.transform.position = scaleVector3(new Vector3(n.xCog, n.yCog, n.zCog));
                     //make each node a child of the current GameObject
