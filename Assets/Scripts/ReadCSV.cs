@@ -119,6 +119,7 @@ public class ReadCSV : MonoBehaviour
     private void generateEdges()
     {
         Vector3 start, end, offset;
+        GameObject sampleEdge = GameObject.Find("Edge");
         for (int i = 0; i< nodes.Count && i<360; i++)
         {
             Node n = nodes[i];
@@ -134,21 +135,23 @@ public class ReadCSV : MonoBehaviour
                     Node e = nodes[j];
                     end = scaleVector3(new Vector3(e.xCog, e.yCog, e.zCog));
                     offset = end - start;
-                    drawEdge(start,end,offset,strength, nodes[i].nodeId + ":" + nodes[j].nodeId);
+                    drawEdge(start,end,offset,strength, nodes[i].nodeId + ":" + nodes[j].nodeId, sampleEdge);
                 }
             }
             
         }
+        sampleEdge.SetActive(false);
     }
 
-    private void drawEdge(Vector3 start, Vector3 end, Vector3 offset, float strength, string name)
+    private void drawEdge(Vector3 start, Vector3 end, Vector3 offset, float strength, string name, GameObject sampleEdge)
     {
         if (showEdges)
         {
             //GameObject edge = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-            GameObject edge = GameObject.Instantiate(GameObject.Find("Edge"));
+            GameObject edge = Instantiate(sampleEdge);
             //edge.GetComponent<MeshRenderer>().material = Resources.Load("Materials/SphereR.mat", typeof(Material)) as Material;
             //Using a material from assets with GPU instancing on
+            edge.SetActive(true);
             edge.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/EdgeR");
             edge.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.black);
             edge.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
@@ -167,6 +170,7 @@ public class ReadCSV : MonoBehaviour
     {
         if (showNodes)
         {
+            GameObject sampleNode = GameObject.Find("Node");
             foreach (Node n in nodes)
             {
                 GameObject temp;
@@ -175,7 +179,7 @@ public class ReadCSV : MonoBehaviour
                 {
                     //temp = Instantiate(objects[n.nodeId%2]);
                     //temp = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                    temp = GameObject.Instantiate(GameObject.Find("Node"));
+                    temp = Instantiate(sampleNode);
                     temp.name = n.regionName;
                     //temp.GetComponent<MeshRenderer>().material = Resources.Load("Materials/SphereB.mat", typeof(Material)) as Material;
                     //Using a material from assets with GPU instancing on
@@ -191,6 +195,7 @@ public class ReadCSV : MonoBehaviour
                 }
                 //Debug.Log(n.nodeId + " : " + n.regionName + " (" + n.xCog + "," + n.yCog + "," + n.zCog + ")" + n.NodeConnection.Length);
             }
+            sampleNode.SetActive(false);
         }
     }
 
