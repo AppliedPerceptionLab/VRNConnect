@@ -145,10 +145,11 @@ public class ReadCSV : MonoBehaviour
     {
         if (showEdges)
         {
-            GameObject edge = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            //GameObject edge = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            GameObject edge = GameObject.Instantiate(GameObject.Find("Edge"));
             //edge.GetComponent<MeshRenderer>().material = Resources.Load("Materials/SphereR.mat", typeof(Material)) as Material;
             //Using a material from assets with GPU instancing on
-            edge.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/SphereR");
+            edge.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/EdgeR");
             edge.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.black);
             edge.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             edge.GetComponent<MeshRenderer>().receiveShadows = false;
@@ -173,7 +174,8 @@ public class ReadCSV : MonoBehaviour
                 if (n.nodeId < 361)
                 {
                     //temp = Instantiate(objects[n.nodeId%2]);
-                    temp = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    //temp = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    temp = GameObject.Instantiate(GameObject.Find("Node"));
                     temp.name = n.regionName;
                     //temp.GetComponent<MeshRenderer>().material = Resources.Load("Materials/SphereB.mat", typeof(Material)) as Material;
                     //Using a material from assets with GPU instancing on
