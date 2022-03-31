@@ -10,6 +10,7 @@ public class ReadCSV : MonoBehaviour
     public Vector3 rotation = new Vector3(90.0f, 0.0f, 0.0f);
     public Vector3 sphereSize = new Vector3(0.05f, 0.05f, 0.05f);
     public static List<Node> nodes = new List<Node>();
+    public static List<Edge> edges = new List<Edge>();
     public Boolean showNodes = true;
     public Boolean showEdges = true;
 
@@ -120,6 +121,7 @@ public class ReadCSV : MonoBehaviour
     {
         Vector3 start, end, offset;
         GameObject sampleEdge = GameObject.Find("Edge");
+        int id = 1;
         for (int i = 0; i< nodes.Count && i<360; i++)
         {
             Node n = nodes[i];
@@ -135,7 +137,16 @@ public class ReadCSV : MonoBehaviour
                     Node e = nodes[j];
                     end = scaleVector3(new Vector3(e.xCog, e.yCog, e.zCog));
                     offset = end - start;
-                    drawEdge(start,end,offset,strength, nodes[i].nodeId + ":" + nodes[j].nodeId, sampleEdge);
+                    Edge edge = new Edge();
+                    edge.edgeId = id++;
+                    edge.node1Id = nodes[i].nodeId;
+                    edge.node2Id = nodes[j].nodeId;
+                    edge.start = start;
+                    edge.end = end;
+                    edge.offset = offset;
+                    edge.strenght = strength;
+                    edge.name = nodes[i].nodeId + ":" + nodes[j].nodeId;
+                    drawEdge(edge, sampleEdge);
                 }
             }
             
@@ -143,27 +154,61 @@ public class ReadCSV : MonoBehaviour
         sampleEdge.SetActive(false);
     }
 
-    private void drawEdge(Vector3 start, Vector3 end, Vector3 offset, float strength, string name, GameObject sampleEdge)
+    private void drawEdge(Edge edge, GameObject sampleEdge)
     {
         if (showEdges)
         {
             //GameObject edge = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-            GameObject edge = Instantiate(sampleEdge);
+            GameObject edgeObj = Instantiate(sampleEdge);
             //edge.GetComponent<MeshRenderer>().material = Resources.Load("Materials/SphereR.mat", typeof(Material)) as Material;
             //Using a material from assets with GPU instancing on
-            edge.SetActive(true);
-            edge.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/EdgeR");
-            edge.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.black);
-            edge.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-            edge.GetComponent<MeshRenderer>().receiveShadows = false;
-            edge.name = name;
-            edge.transform.position = start + (offset / 2.0f);
+            edgeObj.SetActive(true);
+            edgeObj.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/EdgeR");
+            edgeObj.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.black);
+            edgeObj.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            edgeObj.GetComponent<MeshRenderer>().receiveShadows = false;
+            edgeObj.name = edge.name;
+            edgeObj.transform.position = edge.start + (edge.offset / 2.0f);
             //edge.transform.localScale = new Vector3(strength, offset.magnitude, strength);
-            edge.transform.up = offset;
-            edge.transform.localScale = new Vector3(0.001f, offset.magnitude / 2.0f, 0.001f);
-            edge.transform.parent = gameObject.transform;
+            edgeObj.transform.up = edge.offset;
+            edgeObj.transform.localScale = new Vector3(0.001f, edge.offset.magnitude / 2.0f, 0.001f);
+            edgeObj.transform.parent = gameObject.transform;
             //objects.Add(edge);
+            edge.gameObject = edgeObj;
+            edges.Add(edge);
+            edgeObj.SetActive(false);
         }
+    }
+
+    public void EnableEdgeOfNode(string nodeName,bool enable)
+    {
+        Debug.Log(nodeName + enable);
+        int nodeID = FindNodeID(nodeName);
+        //NodeID found
+        if(nodeID != -1)
+        {
+            foreach (Edge e in edges)
+            {
+                if(e.node1Id == nodeID || e.node2Id == nodeID)
+                {
+                    e.gameObject.SetActive(enable);
+                }
+            }
+        }
+    }
+
+    private int FindNodeID(string nodeName)
+    {
+        foreach (Node n in nodes)
+        {
+            if(n.regionName.Equals(nodeName))
+            {
+                return n.nodeId;
+            }
+        }
+
+        //Node not found
+        return -1;
     }
 
     private void generateNodes()
