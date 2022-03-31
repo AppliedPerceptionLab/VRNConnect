@@ -13,6 +13,7 @@ public class ReadCSV : MonoBehaviour
     public static List<Edge> edges = new List<Edge>();
     public Boolean showNodes = true;
     public Boolean showEdges = true;
+    private float maxEdgeSize = 0f;
 
     private Dictionary<string, GameObject> prefabs = new Dictionary<string, GameObject>();
 
@@ -151,6 +152,7 @@ public class ReadCSV : MonoBehaviour
             }
             
         }
+        maxEdgeSize = FindMax();
         sampleEdge.SetActive(false);
     }
 
@@ -180,6 +182,27 @@ public class ReadCSV : MonoBehaviour
         }
     }
 
+    private float CalculateWidth(float strenght)
+    {
+        return (strenght * 0.04f) / maxEdgeSize;
+        //return 0.01f;
+
+    }
+
+    private float FindMax()
+    {
+        float max = 0f;
+        foreach(Edge e in edges)
+        {
+            if(max < e.strenght)
+            {
+                max = e.strenght;
+            }
+        }
+        Debug.Log("Max =" + max);
+        return max;
+    }
+
     public void EnableEdgeOfNode(string nodeName,bool enable)
     {
         Debug.Log(nodeName + enable);
@@ -191,6 +214,7 @@ public class ReadCSV : MonoBehaviour
             {
                 if(e.node1Id == nodeID || e.node2Id == nodeID)
                 {
+                    e.gameObject.transform.localScale = new Vector3(CalculateWidth(e.strenght), e.offset.magnitude / 2.0f, CalculateWidth(e.strenght));
                     e.gameObject.SetActive(enable);
                 }
             }
@@ -213,8 +237,8 @@ public class ReadCSV : MonoBehaviour
 
     private void generateNodes()
     {
-        if (showNodes)
-        {
+        //if (showNodes)
+        //{
             GameObject sampleNode = GameObject.Find("Node");
             foreach (Node n in nodes)
             {
@@ -241,7 +265,7 @@ public class ReadCSV : MonoBehaviour
                 //Debug.Log(n.nodeId + " : " + n.regionName + " (" + n.xCog + "," + n.yCog + "," + n.zCog + ")" + n.NodeConnection.Length);
             }
             sampleNode.SetActive(false);
-        }
+        //}
     }
 
     private void OnDrawGizmos()
