@@ -152,12 +152,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13d3a7a004c3e164a8ebd58f59fc85f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CenterOfMass: {x: 0, y: 0, z: 0}
   scale: {x: 50, y: 50, z: 50}
-  rotation: {x: 0, y: 0, z: 90}
   sphereSize: {x: 0.05, y: 0.05, z: 0.05}
   showAllNodes: 1
-  showAllEdges: 1
+  showAllEdges: 0
+  edgeColoring: 0
+  shadowEffect: 0
   threshold: 0
 --- !u!4 &67375504
 Transform:

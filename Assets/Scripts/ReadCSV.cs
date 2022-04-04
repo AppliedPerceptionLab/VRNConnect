@@ -5,14 +5,16 @@ using UnityEngine;
 public class ReadCSV : MonoBehaviour
 {
     //private Graph<Vector3, float> graph;
-    public Vector3 CenterOfMass = new Vector3(0.0f, 0.0f, 0.0f);
+    //public Vector3 CenterOfMass = new Vector3(0.0f, 0.0f, 0.0f);
     public Vector3 scale = new Vector3(50.0f, 50.0f, 50.0f);
-    public Vector3 rotation = new Vector3(90.0f, 0.0f, 0.0f);
+    //public Vector3 rotation = new Vector3(90.0f, 0.0f, 0.0f);
     public Vector3 sphereSize = new Vector3(0.05f, 0.05f, 0.05f);
     public static List<Node> nodes = new List<Node>();
     public static List<Edge> edges = new List<Edge>();
     public Boolean showAllNodes = true;
     public Boolean showAllEdges = false;
+    public Boolean edgeColoring = false;
+    public Boolean shadowEffect = false;
     private float maxEdgeSize = 0f;
     public float threshold = 0.1f;
 
@@ -272,7 +274,7 @@ public class ReadCSV : MonoBehaviour
                     temp.transform.position = scaleVector3(new Vector3(n.xCog, n.yCog, n.zCog));
                     //make each node a child of the current GameObject
                     temp.transform.parent = gameObject.transform;
-                    temp.transform.Rotate(rotation.x, rotation.y, rotation.z, Space.World);
+                    //temp.transform.Rotate(rotation.x, rotation.y, rotation.z, Space.World);
                     //objects.Add(temp);
                 }
                 //Debug.Log(n.nodeId + " : " + n.regionName + " (" + n.xCog + "," + n.yCog + "," + n.zCog + ")" + n.NodeConnection.Length);
