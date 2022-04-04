@@ -156,8 +156,9 @@ MonoBehaviour:
   scale: {x: 50, y: 50, z: 50}
   rotation: {x: 0, y: 0, z: 90}
   sphereSize: {x: 0.05, y: 0.05, z: 0.05}
-  showNodes: 1
-  showEdges: 1
+  showAllNodes: 1
+  showAllEdges: 1
+  threshold: 0
 --- !u!4 &67375504
 Transform:
   m_ObjectHideFlags: 0

@@ -11,9 +11,10 @@ public class ReadCSV : MonoBehaviour
     public Vector3 sphereSize = new Vector3(0.05f, 0.05f, 0.05f);
     public static List<Node> nodes = new List<Node>();
     public static List<Edge> edges = new List<Edge>();
-    public Boolean showNodes = true;
-    public Boolean showEdges = true;
+    public Boolean showAllNodes = true;
+    public Boolean showAllEdges = false;
     private float maxEdgeSize = 0f;
+    public float threshold = 0.1f;
 
     private Dictionary<string, GameObject> prefabs = new Dictionary<string, GameObject>();
 
@@ -123,17 +124,18 @@ public class ReadCSV : MonoBehaviour
         Vector3 start, end, offset;
         GameObject sampleEdge = GameObject.Find("Edge");
         int id = 1;
-        for (int i = 0; i< nodes.Count && i<360; i++)
+        for (int i = 0; i < nodes.Count && i < 360; i++)
         {
             Node n = nodes[i];
             start = scaleVector3(new Vector3(n.xCog, n.yCog, n.zCog));
-            for (int j = i+1; j<n.NodeConnection.Length && j < 360; j++)
+            for (int j = i + 1; j < n.NodeConnection.Length && j < 360; j++)
             {
-                
+
                 float.TryParse(n.NodeConnection[j], out float strength);
                 //Debug.Log(n.NodeConnection[j]);
                 //if they have connection
-                if (strength != 0.0f) {
+                if (strength != 0.0f)
+                {
                     //Debug.Log(i + ":" + j + "->" + strength) ;
                     Node e = nodes[j];
                     end = scaleVector3(new Vector3(e.xCog, e.yCog, e.zCog));
@@ -150,43 +152,47 @@ public class ReadCSV : MonoBehaviour
                     drawEdge(edge, sampleEdge);
                 }
             }
-            
         }
         maxEdgeSize = FindMax();
         sampleEdge.SetActive(false);
+        for (int i = 0; i < nodes.Count && i < 360; i++)
+        {
+            Node n = nodes[i];
+            EnableEdgeOfNode(n.regionName, showAllEdges);
+        }
     }
 
     private void drawEdge(Edge edge, GameObject sampleEdge)
     {
-        if (showEdges)
-        {
-            //GameObject edge = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-            GameObject edgeObj = Instantiate(sampleEdge);
-            //edge.GetComponent<MeshRenderer>().material = Resources.Load("Materials/SphereR.mat", typeof(Material)) as Material;
-            //Using a material from assets with GPU instancing on
-            edgeObj.SetActive(true);
-            edgeObj.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/EdgeR");
-            edgeObj.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.black);
-            edgeObj.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-            edgeObj.GetComponent<MeshRenderer>().receiveShadows = false;
-            edgeObj.name = edge.name;
-            edgeObj.transform.position = edge.start + (edge.offset / 2.0f);
-            //edge.transform.localScale = new Vector3(strength, offset.magnitude, strength);
-            edgeObj.transform.up = edge.offset;
-            edgeObj.transform.localScale = new Vector3(0.001f, edge.offset.magnitude / 2.0f, 0.001f);
-            edgeObj.transform.parent = gameObject.transform;
-            //objects.Add(edge);
-            edge.gameObject = edgeObj;
-            edges.Add(edge);
-            edgeObj.SetActive(false);
-        }
+        //GameObject edge = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+        GameObject edgeObj = Instantiate(sampleEdge);
+        //edge.GetComponent<MeshRenderer>().material = Resources.Load("Materials/SphereR.mat", typeof(Material)) as Material;
+        //Using a material from assets with GPU instancing on
+        edgeObj.SetActive(true);
+        edgeObj.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/EdgeR");
+        edgeObj.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.black);
+        edgeObj.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        edgeObj.GetComponent<MeshRenderer>().receiveShadows = false;
+        edgeObj.name = edge.name;
+        edgeObj.transform.position = edge.start + (edge.offset / 2.0f);
+        //edge.transform.localScale = new Vector3(strength, offset.magnitude, strength);
+        edgeObj.transform.up = edge.offset;
+        edgeObj.transform.localScale = new Vector3(0.001f, edge.offset.magnitude / 2.0f, 0.001f);
+        edgeObj.transform.parent = gameObject.transform;
+        //objects.Add(edge);
+        edge.gameObject = edgeObj;
+        edges.Add(edge);
+        edgeObj.SetActive(false);
     }
 
     private float CalculateWidth(float strenght)
     {
-        return (strenght * 0.04f) / maxEdgeSize;
-        //return 0.01f;
-
+        if (strenght >= threshold * maxEdgeSize)
+        {
+            return (strenght * 0.04f) / maxEdgeSize;
+        }
+        
+        return 0f;
     }
 
     private float FindMax()
@@ -212,10 +218,17 @@ public class ReadCSV : MonoBehaviour
         {
             foreach (Edge e in edges)
             {
-                if(e.node1Id == nodeID || e.node2Id == nodeID)
+                if (e.node1Id == nodeID || e.node2Id == nodeID)
                 {
-                    e.gameObject.transform.localScale = new Vector3(CalculateWidth(e.strenght), e.offset.magnitude / 2.0f, CalculateWidth(e.strenght));
-                    e.gameObject.SetActive(enable);
+                    float width = CalculateWidth(e.strenght);
+                    if (width > 0f)
+                    {
+                        e.gameObject.transform.localScale = new Vector3(width, e.offset.magnitude / 2.0f, width);
+                        e.gameObject.SetActive(enable || showAllEdges);
+                    } else
+                    {
+                        //Destroy gameObject
+                    }
                 }
             }
         }
@@ -268,32 +281,6 @@ public class ReadCSV : MonoBehaviour
         //}
     }
 
-    private void OnDrawGizmos()
-    {
-
-       /* if (graph == null)
-        {
-            Start();
-        }
-
-        Debug.Log("Drawing your gizmos" + graph.Nodes.Count);
-        //Drawing Nodes
-        foreach (var node in graph.Nodes)
-        {
-
-            Gizmos.color = node.NodeColor;
-            //TODO: change node size
-            Gizmos.DrawSphere(scaleVector3(node.Value), 0.125f);
-        }*/
-
-        //Drawing Edges
-        /*foreach (var edge in graph.Edges)
-        {
-            Gizmos.color = edge.EdgeColor;
-            Gizmos.DrawLine(edge.From.Value, edge.To.Value);
-        }*/
-    }
-
     private Vector3 scaleVector3(Vector3 Value)
     {
         return new Vector3(Value.x / scale.x, Value.y / scale.y, Value.z / scale.z);
@@ -313,5 +300,31 @@ public class ReadCSV : MonoBehaviour
             }
         }*/
         //gameObject.transform.position = CenterOfMass;
+    }
+
+    private void OnDrawGizmos()
+    {
+
+        /* if (graph == null)
+         {
+             Start();
+         }
+
+         Debug.Log("Drawing your gizmos" + graph.Nodes.Count);
+         //Drawing Nodes
+         foreach (var node in graph.Nodes)
+         {
+
+             Gizmos.color = node.NodeColor;
+             //TODO: change node size
+             Gizmos.DrawSphere(scaleVector3(node.Value), 0.125f);
+         }*/
+
+        //Drawing Edges
+        /*foreach (var edge in graph.Edges)
+        {
+            Gizmos.color = edge.EdgeColor;
+            Gizmos.DrawLine(edge.From.Value, edge.To.Value);
+        }*/
     }
 }
