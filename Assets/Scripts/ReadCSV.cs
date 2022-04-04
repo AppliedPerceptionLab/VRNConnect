@@ -17,6 +17,7 @@ public class ReadCSV : MonoBehaviour
     public Boolean shadowEffect = false;
     private float maxEdgeSize = 0f;
     public float threshold = 0.1f;
+    public Color defaultColor = Color.black;
 
     private Dictionary<string, GameObject> prefabs = new Dictionary<string, GameObject>();
 
@@ -121,6 +122,44 @@ public class ReadCSV : MonoBehaviour
         generateEdges();
     }
 
+    private void generateNodes()
+    {
+        //if (showNodes)
+        //{
+        GameObject sampleNode = GameObject.Find("Node");
+        foreach (Node n in nodes)
+        {
+            GameObject temp;
+            //remove regions > 360 -> cerebellum
+            if (n.nodeId < 361)
+            {
+                //temp = Instantiate(objects[n.nodeId%2]);
+                //temp = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                temp = Instantiate(sampleNode);
+                temp.name = n.regionName;
+                //temp.GetComponent<MeshRenderer>().material = Resources.Load("Materials/SphereB.mat", typeof(Material)) as Material;
+                //Using a material from assets with GPU instancing on
+                temp.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/SphereB");
+                temp.GetComponent<MeshRenderer>().material.SetColor("_Color", new Color(n.Red / 255f, n.Green / 255f, n.Blue / 255f, n.Alpha / 255f));
+                //temp.GetComponent<MeshRenderer>().receiveShadows = false;
+                temp.transform.localScale = sphereSize;
+                temp.transform.position = scaleVector3(new Vector3(n.xCog, n.yCog, n.zCog));
+                //make each node a child of the current GameObject
+                temp.transform.parent = gameObject.transform;
+                //temp.transform.Rotate(rotation.x, rotation.y, rotation.z, Space.World);
+                //objects.Add(temp);
+            }
+            //Debug.Log(n.nodeId + " : " + n.regionName + " (" + n.xCog + "," + n.yCog + "," + n.zCog + ")" + n.NodeConnection.Length);
+        }
+        sampleNode.SetActive(false);
+        //}
+    }
+
+    private Vector3 scaleVector3(Vector3 Value)
+    {
+        return new Vector3(Value.x / scale.x, Value.y / scale.y, Value.z / scale.z);
+    }
+
     private void generateEdges()
     {
         Vector3 start, end, offset;
@@ -144,13 +183,16 @@ public class ReadCSV : MonoBehaviour
                     offset = end - start;
                     Edge edge = new Edge();
                     edge.edgeId = id++;
-                    edge.node1Id = nodes[i].nodeId;
-                    edge.node2Id = nodes[j].nodeId;
+                    edge.node1Id = n.nodeId;
+                    edge.node2Id = e.nodeId;
+                    Color color1 = new Color(n.Red / 255f, n.Green / 255f, n.Blue / 255f, n.Alpha / 255f);
+                    Color color2 = new Color(e.Red / 255f, e.Green / 255f, e.Blue / 255f, e.Alpha / 255f);
+                    edge.edgeColor = CreateGradient(color1, color2);
                     edge.start = start;
                     edge.end = end;
                     edge.offset = offset;
                     edge.strenght = strength;
-                    edge.name = nodes[i].nodeId + ":" + nodes[j].nodeId;
+                    edge.name = n.nodeId + ":" + e.nodeId;
                     drawEdge(edge, sampleEdge);
                 }
             }
@@ -172,7 +214,7 @@ public class ReadCSV : MonoBehaviour
         //Using a material from assets with GPU instancing on
         edgeObj.SetActive(true);
         edgeObj.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/EdgeR");
-        edgeObj.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.black);
+        edgeObj.GetComponent<MeshRenderer>().material.SetColor("_Color", defaultColor);
         edgeObj.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
         edgeObj.GetComponent<MeshRenderer>().receiveShadows = false;
         edgeObj.name = edge.name;
@@ -226,6 +268,33 @@ public class ReadCSV : MonoBehaviour
                     if (width > 0f)
                     {
                         e.gameObject.transform.localScale = new Vector3(width, e.offset.magnitude / 2.0f, width);
+                        if(showAllEdges)
+                        {
+                            if (edgeColoring)
+                            {
+                                e.gameObject.GetComponent<MeshRenderer>().material.SetColor("_Color", e.edgeColor);
+                            }
+                            else
+                            {
+                                e.gameObject.GetComponent<MeshRenderer>().material.SetColor("_Color", defaultColor);
+                            }
+                        } else
+                        {
+                            if (enable)
+                            {
+                                e.gameObject.GetComponent<MeshRenderer>().material.SetColor("_Color", e.edgeColor);
+                                if (shadowEffect)
+                                {
+                                    e.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                                }
+                            }
+                            else
+                            {
+                                e.gameObject.GetComponent<MeshRenderer>().material.SetColor("_Color", defaultColor);
+                                e.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                            }
+                        }
+                        
                         e.gameObject.SetActive(enable || showAllEdges);
                     } else
                     {
@@ -250,42 +319,31 @@ public class ReadCSV : MonoBehaviour
         return -1;
     }
 
-    private void generateNodes()
+    private Color CreateGradient(Color color1, Color color2)
     {
-        //if (showNodes)
-        //{
-            GameObject sampleNode = GameObject.Find("Node");
-            foreach (Node n in nodes)
-            {
-                GameObject temp;
-                //remove regions > 360 -> cerebellum
-                if (n.nodeId < 361)
-                {
-                    //temp = Instantiate(objects[n.nodeId%2]);
-                    //temp = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                    temp = Instantiate(sampleNode);
-                    temp.name = n.regionName;
-                    //temp.GetComponent<MeshRenderer>().material = Resources.Load("Materials/SphereB.mat", typeof(Material)) as Material;
-                    //Using a material from assets with GPU instancing on
-                    temp.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/SphereB");
-                    temp.GetComponent<MeshRenderer>().material.SetColor("_Color", new Color(n.Red / 255f, n.Green / 255f, n.Blue / 255f, n.Alpha / 255f));
-                    //temp.GetComponent<MeshRenderer>().receiveShadows = false;
-                    temp.transform.localScale = sphereSize;
-                    temp.transform.position = scaleVector3(new Vector3(n.xCog, n.yCog, n.zCog));
-                    //make each node a child of the current GameObject
-                    temp.transform.parent = gameObject.transform;
-                    //temp.transform.Rotate(rotation.x, rotation.y, rotation.z, Space.World);
-                    //objects.Add(temp);
-                }
-                //Debug.Log(n.nodeId + " : " + n.regionName + " (" + n.xCog + "," + n.yCog + "," + n.zCog + ")" + n.NodeConnection.Length);
-            }
-            sampleNode.SetActive(false);
-        //}
-    }
+        GradientColorKey[] colorKey;
+        GradientAlphaKey[] alphaKey;
 
-    private Vector3 scaleVector3(Vector3 Value)
-    {
-        return new Vector3(Value.x / scale.x, Value.y / scale.y, Value.z / scale.z);
+        
+         Gradient gradient = new Gradient();
+
+         // Populate the color keys at the relative time 0 and 1 (0 and 100%)
+         colorKey = new GradientColorKey[2];
+         colorKey[0].color = color1;
+         colorKey[0].time = 0.0f;
+         colorKey[1].color = color2;
+         colorKey[1].time = 1.0f;
+
+         // Populate the alpha  keys at relative time 0 and 1  (0 and 100%)
+         alphaKey = new GradientAlphaKey[2];
+         alphaKey[0].alpha = 1.0f;
+         alphaKey[0].time = 0.0f;
+         alphaKey[1].alpha = 0.0f;
+         alphaKey[1].time = 1.0f;
+
+         gradient.SetKeys(colorKey, alphaKey);
+
+        return gradient.Evaluate(1f);
     }
 
     // Update is called once per frame

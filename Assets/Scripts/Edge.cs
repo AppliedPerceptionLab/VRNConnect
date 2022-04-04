@@ -8,6 +8,7 @@ public class Edge
     public string name;
     public int node1Id;
     public int node2Id;
+    public Color edgeColor;
     public Vector3 start;
     public Vector3 end;
     public Vector3 offset;
