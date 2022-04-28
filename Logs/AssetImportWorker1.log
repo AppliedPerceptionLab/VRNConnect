@@ -15,7 +15,7 @@ C:/Users/Sepehr/BrainConnect
 -logFile
 Logs/AssetImportWorker1.log
 -srvPort
-58321
+57009
 Successfully changed project path to: C:/Users/Sepehr/BrainConnect
 C:/Users/Sepehr/BrainConnect
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -47,11 +47,15 @@ C:/Users/Sepehr/BrainConnect
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Refreshing native plugins compatible for Editor in 179.87 ms, found 12 plugins.
-Preloading 1 native plugins for Editor in 8.49 ms.
+Refreshing native plugins compatible for Editor in 186.37 ms, found 14 plugins.
+Preloading 1 native plugins for Editor in 8.01 ms.
 Initialize engine version: 2021.2.10f1 (ee872746220e)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2021.2.10f1/Editor/Data/Resources/UnitySubsystems
 [Subsystems] Discovering subsystems at path C:/Users/Sepehr/BrainConnect/Assets
+[Subsystems] No descriptors matched for  examples in Assets/MeshingFeaturePlugin/UnitySubsystemsManifest.json.
+[Subsystems] No descriptors matched for  inputs in Assets/MeshingFeaturePlugin/UnitySubsystemsManifest.json.
+[Subsystems] No descriptors matched for  displays in Assets/MeshingFeaturePlugin/UnitySubsystemsManifest.json.
+[Subsystems] 1 'meshings' descriptors matched in Assets/MeshingFeaturePlugin/UnitySubsystemsManifest.json
 GfxDevice: creating device client; threaded=0; jobified=0
 Direct3D:
     Version:  Direct3D 11.0 [level 11.1]
@@ -64,96 +68,96 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2021.2.10f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2021.2.10f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2021.2.10f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56008
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56456
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.2.10f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.010299 seconds.
+Registered in 0.010280 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 182.82 ms, found 12 plugins.
-Preloading 1 native plugins for Editor in 7.38 ms.
+Refreshing native plugins compatible for Editor in 135.85 ms, found 14 plugins.
+Preloading 1 native plugins for Editor in 9.11 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.975 seconds
+- Completed reload, in  0.767 seconds
 Domain Reload Profiling:
-	ReloadAssembly (976ms)
-		BeginReloadAssembly (109ms)
+	ReloadAssembly (768ms)
+		BeginReloadAssembly (95ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (1ms)
-		EndReloadAssembly (766ms)
-			LoadAssemblies (106ms)
+		EndReloadAssembly (581ms)
+			LoadAssemblies (92ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (124ms)
+			SetupTypeCache (109ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (89ms)
-			SetupLoadedEditorAssemblies (466ms)
+			RebuildScriptCaches (30ms)
+			SetupLoadedEditorAssemblies (379ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (28ms)
+				InitializePlatformSupportModulesInManaged (27ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (190ms)
+				RefreshPlugins (145ms)
 				BeforeProcessingInitializeOnLoad (2ms)
-				ProcessInitializeOnLoadAttributes (186ms)
-				ProcessInitializeOnLoadMethodAttributes (59ms)
+				ProcessInitializeOnLoadAttributes (158ms)
+				ProcessInitializeOnLoadMethodAttributes (47ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.024366 seconds.
+Registered in 0.025101 seconds.
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory doesn't match image C:\Users\Sepehr\BrainConnect\Library\PackageCache\com.unity.visualscripting@1.7.7\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
 Symbol file LoadedFromMemory doesn't match image C:\Users\Sepehr\BrainConnect\Library\PackageCache\com.unity.visualscripting@1.7.7\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 149.04 ms, found 12 plugins.
-Preloading 1 native plugins for Editor in 5.15 ms.
+Refreshing native plugins compatible for Editor in 141.98 ms, found 14 plugins.
+Preloading 1 native plugins for Editor in 7.03 ms.
 Package Manager log level set to [2]
 [XR] OculusXRPlugin: registering subsystems
 [XR] Unable to register display lifecyle provider: [1]
 [XR] Oculus Input lifecycle provider registered.
 [XR] Unable to register input lifecyle provider: [1]
-[XR] OVRP version 1.69.0
+[XR] OVRP version 1.71.0
 Mono: successfully reloaded assembly
-- Completed reload, in  1.909 seconds
+- Completed reload, in  1.716 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1910ms)
-		BeginReloadAssembly (154ms)
+	ReloadAssembly (1717ms)
+		BeginReloadAssembly (137ms)
 			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (7ms)
+			DisableScriptedObjects (6ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (26ms)
-		EndReloadAssembly (1628ms)
-			LoadAssemblies (148ms)
+			CreateAndSetChildDomain (22ms)
+		EndReloadAssembly (1454ms)
+			LoadAssemblies (145ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (386ms)
+			SetupTypeCache (354ms)
 			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (119ms)
-			SetupLoadedEditorAssemblies (901ms)
+			RebuildScriptCaches (91ms)
+			SetupLoadedEditorAssemblies (810ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (19ms)
+				InitializePlatformSupportModulesInManaged (12ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (154ms)
-				BeforeProcessingInitializeOnLoad (150ms)
-				ProcessInitializeOnLoadAttributes (459ms)
-				ProcessInitializeOnLoadMethodAttributes (104ms)
-				AfterProcessingInitializeOnLoad (14ms)
+				RefreshPlugins (149ms)
+				BeforeProcessingInitializeOnLoad (144ms)
+				ProcessInitializeOnLoadAttributes (424ms)
+				ProcessInitializeOnLoadMethodAttributes (69ms)
+				AfterProcessingInitializeOnLoad (11ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (8ms)
+			AwakeInstancesAfterBackupRestoration (7ms)
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
 Shader 'Oculus/OVRMRCameraFrameLit': fallback shader 'Alpha-Diffuse' not found
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.11 seconds
-Refreshing native plugins compatible for Editor in 1.54 ms, found 12 plugins.
-Preloading 1 native plugins for Editor in 6.26 ms.
-Unloading 5185 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 71 unused Assets / (190.6 KB). Loaded Objects now: 5621.
-Memory consumption went from 204.5 MB to 204.3 MB.
-Total: 4.535700 ms (FindLiveObjects: 0.525200 ms CreateObjectMapping: 0.613100 ms MarkObjects: 3.174300 ms  DeleteObjects: 0.221900 ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.10 seconds
+Refreshing native plugins compatible for Editor in 1.34 ms, found 14 plugins.
+Preloading 1 native plugins for Editor in 6.71 ms.
+Unloading 5344 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 76 unused Assets / (191.8 KB). Loaded Objects now: 5778.
+Memory consumption went from 210.9 MB to 210.7 MB.
+Total: 4.112400 ms (FindLiveObjects: 0.586500 ms CreateObjectMapping: 0.535200 ms MarkObjects: 2.797100 ms  DeleteObjects: 0.190500 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -167,52 +171,34 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  Time since last request: 2065075.173269 seconds.
-  path: Assets/VR Controllers Models/OpenVR Controller(Knuckles DV Left) - Left.prefab
-  artifactKey: Guid(542a6345c56bbcd41b92f421fac57d92) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/VR Controllers Models/OpenVR Controller(Knuckles DV Left) - Left.prefab using Guid(542a6345c56bbcd41b92f421fac57d92) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2a50bb8fa67640c5331194be407f9dbf') in 0.223120 seconds 
+  Time since last request: 2074409.437635 seconds.
+  path: Packages/com.unity.xr.interaction.toolkit/Runtime/Interaction/Controllers/XRControllerRecording.deprecated.cs
+  artifactKey: Guid(5dd71f83c5d972a49acafe7984687248) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.unity.xr.interaction.toolkit/Runtime/Interaction/Controllers/XRControllerRecording.deprecated.cs using Guid(5dd71f83c5d972a49acafe7984687248) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f91e5a09501d070ae169f5756712471d') in 0.092971 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000029 seconds.
-  path: Assets/VR Controllers Models/Default Controller.prefab
-  artifactKey: Guid(0540e32b498ef284f8e1dcf80dfccd58) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/VR Controllers Models/Default Controller.prefab using Guid(0540e32b498ef284f8e1dcf80dfccd58) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '20b67bcdfd8cc0193259b9f14f8034ea') in 0.029539 seconds 
+  Time since last request: 0.000020 seconds.
+  path: Packages/com.unity.xr.interaction.toolkit/Runtime/Interaction/Controllers/XRController.cs
+  artifactKey: Guid(1ae26e19cd956134bbdf3c6f65bf393a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.unity.xr.interaction.toolkit/Runtime/Interaction/Controllers/XRController.cs using Guid(1ae26e19cd956134bbdf3c6f65bf393a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd24e72a0f856341a0d8d1a511261fa26') in 0.001900 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000038 seconds.
-  path: Assets/VR Controllers Models/Oculus Quest Controller - Right.prefab
-  artifactKey: Guid(cfa8dc06d611ba340b06bbefba58ee46) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/VR Controllers Models/Oculus Quest Controller - Right.prefab using Guid(cfa8dc06d611ba340b06bbefba58ee46) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2c2e10e6fa78d206442b704c8cad118d') in 0.022184 seconds 
+  Time since last request: 0.000028 seconds.
+  path: Packages/com.unity.xr.interaction.toolkit/Runtime/Interaction/Controllers/ActionBasedController.cs
+  artifactKey: Guid(caff514de9b15ad48ab85dcff5508221) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.unity.xr.interaction.toolkit/Runtime/Interaction/Controllers/ActionBasedController.cs using Guid(caff514de9b15ad48ab85dcff5508221) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '46e4a9480cfd1a6ec64605116e29d321') in 0.002432 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000035 seconds.
-  path: Assets/VR Controllers Models/Oculus Touch Controller - Right.prefab
-  artifactKey: Guid(0efe8147fc0009d4ea3039b2374d927c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/VR Controllers Models/Oculus Touch Controller - Right.prefab using Guid(0efe8147fc0009d4ea3039b2374d927c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ad92acf66d1e9a2639cb5c4ec9127585') in 0.021312 seconds 
+  Time since last request: 0.000032 seconds.
+  path: Packages/com.unity.xr.interaction.toolkit/Runtime/Interaction/Controllers/XRControllerRecorder.cs
+  artifactKey: Guid(3c136b463d91eb74c90d06fca5e650b1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.unity.xr.interaction.toolkit/Runtime/Interaction/Controllers/XRControllerRecorder.cs using Guid(3c136b463d91eb74c90d06fca5e650b1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9e85fb4249d8fbd95d30ec62a8f265ab') in 0.002062 seconds 
 ========================================================================
 Received Import Request.
   Time since last request: 0.000025 seconds.
-  path: Assets/VR Controllers Models/Oculus Touch Controller - Left.prefab
-  artifactKey: Guid(b2ec64201e9ec6c4ba155691307536cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/VR Controllers Models/Oculus Touch Controller - Left.prefab using Guid(b2ec64201e9ec6c4ba155691307536cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4a9bf4460aef199dc1932e61af8be644') in 0.019707 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000034 seconds.
-  path: Assets/VR Controllers Models/OpenVR Controller(Vive Controller MV) - Left.prefab
-  artifactKey: Guid(c4b9c875ed967534eb12cd57aeeb1183) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/VR Controllers Models/OpenVR Controller(Vive Controller MV) - Left.prefab using Guid(c4b9c875ed967534eb12cd57aeeb1183) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '23a87ccc22429051308cfec699435300') in 0.050928 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000026 seconds.
-  path: Assets/VR Controllers Models/OpenVR Controller(Vive Controller MV) - Right.prefab
-  artifactKey: Guid(61e60013ce1d7d942b8975c98fdf8154) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/VR Controllers Models/OpenVR Controller(Vive Controller MV) - Right.prefab using Guid(61e60013ce1d7d942b8975c98fdf8154) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '74c94c3ad287322fe2d98e5ca5726c57') in 0.034693 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 21.989846 seconds.
-  path: Assets/VR Controllers Models/Oculus Controllers/oculus_cv1_controller_right/external_controller01_spec.png
-  artifactKey: Guid(c7404a12b1ceddd42983e4964ed4833a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/VR Controllers Models/Oculus Controllers/oculus_cv1_controller_right/external_controller01_spec.png using Guid(c7404a12b1ceddd42983e4964ed4833a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '948153d028adeb2418a3ba24dc3affc3') in 0.198478 seconds 
+  path: Packages/com.unity.xr.interaction.toolkit/Runtime/Interaction/Controllers/XRControllerRecording.cs
+  artifactKey: Guid(bf56d527db2153944867848202cf24d2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.unity.xr.interaction.toolkit/Runtime/Interaction/Controllers/XRControllerRecording.cs using Guid(bf56d527db2153944867848202cf24d2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd27bb438f21e2b945df35acbe970d453') in 0.002476 seconds 
 Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
 AssetImportWorker is now disconnected from the server
 Process exiting
