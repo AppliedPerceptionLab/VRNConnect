@@ -33,14 +33,6 @@ public class ReadCSV : MonoBehaviour
     [Tooltip("The file that contains the reference atlas of the brain")]
     TextAsset atlasColors;
 
-    /*void awake()
-    {
-        foreach (var obj in objects)
-        {
-            prefabs[obj.name] = obj;
-        }
-    }*/
-
     // Start is called before the first frame update
     void Start()
     {
@@ -92,29 +84,6 @@ public class ReadCSV : MonoBehaviour
 
     private void CreateGraph()
     {
-        //graph = new Graph<Vector3, float>();
-
-        /*var edge1 = new Edge<float, Vector3>()
-        {
-            Value = 1.0f,
-            From = node1,
-            To = node2,
-            EdgeColor = Color.yellow
-        };*/
-
-        // add nodes
-        /*foreach (Nodes n in nodes)
-        {
-            Vector3 nd = new Vector3(n.xCog, n.yCog, n.zCog);
-            // get colors from list.ordered RGBA values
-            System.Random rnd = new System.Random();
-            Color randomColor = new Color(rnd.Next(255), rnd.Next(255), rnd.Next(255));
-            var node = new Node<Vector3>() { Value = nd, NodeColor = randomColor };
-            graph.Nodes.Add(node);
-        }*/
-        // add edges
-        //graph.Edges.Add(edge1);
-
         //Create the gameObject for each Node
         generateNodes();
 
@@ -349,42 +318,6 @@ public class ReadCSV : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*foreach(GameObject obj in objects)
-        {
-            if(obj.GetType().Equals(PrimitiveType.Sphere))
-            {
-                obj.SetActive(showNodes);
-            } else if (obj.GetType().Equals(PrimitiveType.Cylinder))
-            {
-                obj.SetActive(showEdges);
-            }
-        }*/
-        //gameObject.transform.position = CenterOfMass;
-    }
 
-    private void OnDrawGizmos()
-    {
-
-        /* if (graph == null)
-         {
-             Start();
-         }
-
-         Debug.Log("Drawing your gizmos" + graph.Nodes.Count);
-         //Drawing Nodes
-         foreach (var node in graph.Nodes)
-         {
-
-             Gizmos.color = node.NodeColor;
-            
-             Gizmos.DrawSphere(scaleVector3(node.Value), 0.125f);
-         }*/
-
-        //Drawing Edges
-        /*foreach (var edge in graph.Edges)
-        {
-            Gizmos.color = edge.EdgeColor;
-            Gizmos.DrawLine(edge.From.Value, edge.To.Value);
-        }*/
     }
 }
