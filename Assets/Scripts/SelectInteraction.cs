@@ -6,9 +6,15 @@ public class SelectInteraction : MonoBehaviour
 {
     Color defaultColor;
     public GameObject brain;
+    private bool nodeSelected = false;
+    //TODO fix the bug with selection/hovering over 2,3 nodes in a straight line
     public void OnHoverOver()
     {
         GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+        if(!nodeSelected)
+        {
+            TooltipUI.ShowTooltip_Static(gameObject.name);
+        }
         //brain.GetComponent<ReadCSV>().EnableEdgeOfNode(gameObject.name, true);
         //defaultColor = GetComponent<Renderer>().material.GetColor("_Color");
         //GetComponent<Renderer>().material.SetColor("_Color",Color.red);
@@ -17,6 +23,10 @@ public class SelectInteraction : MonoBehaviour
     public void OnHoverEnd()
     {
         GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+        if(!nodeSelected)
+        {
+            TooltipUI.HideTooltip_Static();
+        }
         //brain.GetComponent<ReadCSV>().EnableEdgeOfNode(gameObject.name, false);
         //GetComponent<Renderer>().material.SetColor("_Color", defaultColor);
     }
@@ -24,6 +34,8 @@ public class SelectInteraction : MonoBehaviour
     public void OnSelected()
     {
         brain.GetComponent<ReadCSV>().EnableEdgeOfNode(gameObject.name, true);
+        TooltipUI.ShowTooltip_Static(gameObject.name);
+        nodeSelected = true;
         //GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
         //GetComponent<Renderer>().material.SetColor("_Color", defaultColor);
     }
@@ -31,6 +43,8 @@ public class SelectInteraction : MonoBehaviour
     public void OnUnselected()
     {
         brain.GetComponent<ReadCSV>().EnableEdgeOfNode(gameObject.name, false);
+        TooltipUI.HideTooltip_Static();
+        nodeSelected = false;
         //GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
         //GetComponent<Renderer>().material.SetColor("_Color", defaultColor);
     }

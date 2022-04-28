@@ -102,17 +102,17 @@ public class ReadCSV : MonoBehaviour
             EdgeColor = Color.yellow
         };*/
 
-        //TODO add nodes
+        // add nodes
         /*foreach (Nodes n in nodes)
         {
             Vector3 nd = new Vector3(n.xCog, n.yCog, n.zCog);
-            //TODO get colors from list.ordered RGBA values
+            // get colors from list.ordered RGBA values
             System.Random rnd = new System.Random();
             Color randomColor = new Color(rnd.Next(255), rnd.Next(255), rnd.Next(255));
             var node = new Node<Vector3>() { Value = nd, NodeColor = randomColor };
             graph.Nodes.Add(node);
         }*/
-        //TODO add edges
+        // add edges
         //graph.Edges.Add(edge1);
 
         //Create the gameObject for each Node
@@ -376,7 +376,7 @@ public class ReadCSV : MonoBehaviour
          {
 
              Gizmos.color = node.NodeColor;
-             //TODO: change node size
+            
              Gizmos.DrawSphere(scaleVector3(node.Value), 0.125f);
          }*/
 
