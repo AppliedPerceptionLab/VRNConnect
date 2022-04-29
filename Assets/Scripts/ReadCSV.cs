@@ -98,7 +98,7 @@ public class ReadCSV : MonoBehaviour
             axis = new Vector3(0, 0, COM.z);
         }*/
         gameObject.transform.Rotate(-90f , -90f , 90f , Space.World);
-        gameObject.transform.Translate (new Vector3(0f,-0.5f,3f) , Space.World);
+        gameObject.transform.Translate (new Vector3(0f,-0.4f,4f) , Space.World);
     }
 
     private Vector3 FindCenterOfMass()
