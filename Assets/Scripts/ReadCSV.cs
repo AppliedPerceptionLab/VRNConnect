@@ -7,7 +7,7 @@ public class ReadCSV : MonoBehaviour
     //private Graph<Vector3, float> graph;
     //public Vector3 CenterOfMass = new Vector3(0.0f, 0.0f, 0.0f);
     public Vector3 scale = new Vector3(50.0f, 50.0f, 50.0f);
-    //public Vector3 rotation = new Vector3(90.0f, 0.0f, 0.0f);
+    public Vector3 rotate = new Vector3(90.0f, 0.0f, 0.0f);
     public Vector3 sphereSize = new Vector3(0.05f, 0.05f, 0.05f);
     public static List<Node> nodes = new List<Node>();
     public static List<Edge> edges = new List<Edge>();
@@ -80,6 +80,41 @@ public class ReadCSV : MonoBehaviour
         }
         
         CreateGraph();
+        RepositionBrain();
+    }
+
+    private void RepositionBrain()
+    {
+        //Vector3 COM = FindCenterOfMass();
+        //Vector3 axis = Vector3.zero;
+        /*if(vect == 0)
+        {
+            axis = new Vector3(COM.x, 0, 0);
+        } else if (vect == 1)
+        {
+            axis = new Vector3(0, COM.y, 0);
+        } else if (vect == 2)
+        {
+            axis = new Vector3(0, 0, COM.z);
+        }*/
+        gameObject.transform.Rotate(-90f , -90f , 90f , Space.World);
+        gameObject.transform.Translate (new Vector3(0f,-0.5f,3f) , Space.World);
+    }
+
+    private Vector3 FindCenterOfMass()
+    {
+        Vector3 com = Vector3.zero;
+        foreach (Node n in nodes)
+        {
+            //remove regions > 360 -> cerebellum
+            if (n.nodeId < 361)
+            {
+                com.x += n.xCog/360;
+                com.y += n.yCog/360;
+                com.z += n.zCog/360;
+            }
+        }
+        return com;
     }
 
     private void CreateGraph()
