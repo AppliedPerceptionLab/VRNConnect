@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 public class ReadCSV : MonoBehaviour
@@ -146,7 +147,7 @@ public class ReadCSV : MonoBehaviour
                 temp.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/SphereB");
                 temp.GetComponent<MeshRenderer>().material.SetColor("_Color", new Color(n.Red / 255f, n.Green / 255f, n.Blue / 255f, n.Alpha / 255f));
                 //temp.GetComponent<MeshRenderer>().receiveShadows = false;
-                temp.transform.localScale = sphereSize;
+                temp.transform.localScale = getSphereSize();
                 temp.transform.position = scaleVector3(new Vector3(n.xCog, n.yCog, n.zCog));
                 //make each node a child of the current GameObject
                 temp.transform.parent = gameObject.transform;
@@ -157,6 +158,12 @@ public class ReadCSV : MonoBehaviour
         }
         sampleNode.SetActive(false);
         //}
+    }
+
+    private Vector3 getSphereSize()
+    {
+        //TODO implement the sphere size
+        return sphereSize;
     }
 
     private Vector3 scaleVector3(Vector3 Value)
@@ -203,11 +210,28 @@ public class ReadCSV : MonoBehaviour
         }
         maxEdgeSize = FindMax();
         sampleEdge.SetActive(false);
+        //Enabling edges depending on strenght*threshold
+        //calculating node degree
         for (int i = 0; i < nodes.Count && i < 360; i++)
         {
             Node n = nodes[i];
+            nodes[i].nodeDegree = calculateNodeDegree(n);
             EnableEdgeOfNode(n.regionName, showAllEdges);
         }
+    }
+
+    private int calculateNodeDegree(Node n)
+    {
+        int nodeDegree = 0;
+        foreach(string con in n.NodeConnection)
+        {
+            float.TryParse(con, out float strength);
+            if (strength >= threshold * maxEdgeSize)
+            {
+                nodeDegree++;
+            }
+        }
+        return nodeDegree;
     }
 
     private void drawEdge(Edge edge, GameObject sampleEdge)
@@ -233,11 +257,11 @@ public class ReadCSV : MonoBehaviour
         edgeObj.SetActive(false);
     }
 
-    private float CalculateWidth(float strenght)
+    private float CalculateWidth(float strength)
     {
-        if (strenght >= threshold * maxEdgeSize)
+        if (strength >= threshold * maxEdgeSize)
         {
-            return (strenght * 0.04f) / maxEdgeSize;
+            return (strength * 0.04f) / maxEdgeSize;
         }
         
         return 0f;
@@ -255,6 +279,19 @@ public class ReadCSV : MonoBehaviour
         }
         Debug.Log("Max =" + max);
         return max;
+    }
+
+    public string GetTooltipTextForNode(string name)
+    {
+        String tooltipText = "";
+        Node node = FindNode(name);
+        //NodeID found
+        if (node != null)
+        {
+            tooltipText = node.GetTooltipText();
+            //tooltipText = node.ToString();
+        }
+        return tooltipText;
     }
 
     public void EnableEdgeOfNode(string nodeName,bool enable)
@@ -309,11 +346,25 @@ public class ReadCSV : MonoBehaviour
         }
     }
 
-    private int FindNodeID(string nodeName)
+    private Node FindNode(string nodeName)
     {
         foreach (Node n in nodes)
         {
             if(n.regionName.Equals(nodeName))
+            {
+                return n;
+            }
+        }
+
+        //Node not found
+        return null;
+    }
+
+    private int FindNodeID(string nodeName)
+    {
+        foreach (Node n in nodes)
+        {
+            if (n.regionName.Equals(nodeName))
             {
                 return n.nodeId;
             }

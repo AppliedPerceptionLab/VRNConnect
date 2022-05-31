@@ -34,7 +34,8 @@ public class SelectInteraction : MonoBehaviour
     public void OnSelected()
     {
         brain.GetComponent<ReadCSV>().EnableEdgeOfNode(gameObject.name, true);
-        TooltipUI.ShowTooltip_Static(gameObject.name);
+        string tooltipText = brain.GetComponent<ReadCSV>().GetTooltipTextForNode(gameObject.name);
+        TooltipUI.ShowTooltip_Static(tooltipText);
         nodeSelected = true;
         //GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
         //GetComponent<Renderer>().material.SetColor("_Color", defaultColor);
