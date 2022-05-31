@@ -27,7 +27,7 @@ public class Node
     public float Blue;
     public float Alpha;
     public int nodeDegree;
-    public int nodeStrenght;
+    public float nodeStrength;
 
 
 
@@ -60,7 +60,7 @@ public class Node
         //sb.AppendLine(Blue.ToString());
         //sb.AppendLine(Alpha.ToString());
         sb.AppendLine("nodeDegree : " + nodeDegree.ToString());
-        sb.AppendLine("nodeStrenght : " + nodeStrenght.ToString());
+        sb.AppendLine("nodeStrength : " + nodeStrength.ToString());
 
         return sb.ToString();
     }

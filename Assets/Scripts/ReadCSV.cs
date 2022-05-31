@@ -215,23 +215,30 @@ public class ReadCSV : MonoBehaviour
         for (int i = 0; i < nodes.Count && i < 360; i++)
         {
             Node n = nodes[i];
-            nodes[i].nodeDegree = calculateNodeDegree(n);
+            nodes[i].nodeDegree = (int)(calculateNodeDegree(n, true));
+            nodes[i].nodeStrength = calculateNodeDegree(n, false);
             EnableEdgeOfNode(n.regionName, showAllEdges);
         }
     }
 
-    private int calculateNodeDegree(Node n)
+    private float calculateNodeDegree(Node n, bool isNodedegree)
     {
-        int nodeDegree = 0;
+        float res = 0;
         foreach(string con in n.NodeConnection)
         {
             float.TryParse(con, out float strength);
             if (strength >= threshold * maxEdgeSize)
             {
-                nodeDegree++;
+                if (isNodedegree)
+                {
+                    res++;
+                } else
+                {
+                    res += strength;
+                }
             }
         }
-        return nodeDegree;
+        return res;
     }
 
     private void drawEdge(Edge edge, GameObject sampleEdge)
