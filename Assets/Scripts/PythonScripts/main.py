@@ -9,7 +9,7 @@ import bct
 # importing the data
 df_region_color = pd.read_csv('HCP-MMP1_RegionColor.csv', skipfooter=19, engine='python')
 df_region_list = pd.read_csv('HCP-MMP1_UniqueRegionList.csv')
-df_main = pd.read_csv('hcpmmp1.csv',skipfooter=19, engine='python')
+df_main = pd.read_csv('hcpmmp1.csv', skipfooter=19, engine='python')
 ndarray_main = list(df_main).pop(0)
 # columns = range(0,360)
 # df_main = pd.DataFrame(data=df_main, index=columns).T
