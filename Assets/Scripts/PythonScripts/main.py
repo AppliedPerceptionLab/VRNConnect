@@ -10,9 +10,10 @@ import pandas as pd
 # importing the data
 from numpy import ndarray
 
-df_region_color = pd.read_csv('HCP-MMP1_RegionColor.csv', skipfooter=19, engine='python')
-df_region_list = pd.read_csv('HCP-MMP1_UniqueRegionList.csv')
-df_main = pd.read_csv('hcpmmp1.csv', skipfooter=19, header=None, engine='python')
+project_path = '../../Resources/'
+df_region_color = pd.read_csv(f'{project_path}HCP-MMP1_RegionColor.csv', skipfooter=19, engine='python')
+df_region_list = pd.read_csv(f'{project_path}HCP-MMP1_UniqueRegionList.csv')
+df_main = pd.read_csv(f'{project_path}hcpmmp1.csv', skipfooter=19, header=None, engine='python')
 
 # converting to ndarray
 ndarray_sub = np.asarray(list(df_main.get(0)))
@@ -52,8 +53,9 @@ print('Result of the assortativity_wei:' + wei_ass.__str__())
 print('Result of the assortativity_bin:' + bin_ass.__str__())
 
 breadth_dist = bct.breadthdist(ndarray_main_bin)
-pd.DataFrame.from_records(breadth_dist[1]).to_json('breadth_distance.json')
-pd.DataFrame.from_records(breadth_dist[1]).to_csv('breadth_distance.csv')
+pd.DataFrame.from_records(breadth_dist[1]).to_json(f'{project_path}breadth_distance.json')
+pd.DataFrame.from_records(breadth_dist[1]).to_csv(f'{project_path}breadth_distance.csv')
+pd.DataFrame.from_records(breadth_dist[1]).to_csv(f'{project_path}breadth_distance.txt')
 print('Result of the breadth_dist:')
 print(breadth_dist[1])  # -we can get number of disconnected nodes from this one-#
 min_dist = breadth_dist[1].min()
@@ -62,8 +64,9 @@ max_dist = breadth_dist[1].max()
 clus_coef = bct.clustering_coef_wu(ndarray_main)
 print('Result of the clustering coef:')
 print(clus_coef)
-pd.DataFrame.from_dict(clus_coef).to_json('clustering_coef.json')
-pd.DataFrame.from_dict(clus_coef).to_csv('clustering_coef.csv')
+pd.DataFrame.from_dict(clus_coef).to_json(f'{project_path}clustering_coef.json')
+pd.DataFrame.from_dict(clus_coef).to_csv(f'{project_path}clustering_coef.csv')
+pd.DataFrame.from_dict(clus_coef).to_csv(f'{project_path}clustering_coef.txt')
 
 # bct.betweenness_wei
 # bct.agreement_weighted()
@@ -88,8 +91,15 @@ data = [
 ]
 
 # writing results to a csv file
-with open('algorithm_results.csv', 'w', encoding='UTF8', newline='') as f:
-    writer = csv.writer(f)
+with open(f'{project_path}algorithm_results.csv', 'w', encoding='UTF8', newline='') as f1:
+    writer = csv.writer(f1)
+    # write the header
+    writer.writerow(header)
+    # write multiple rows
+    writer.writerows(data)
+
+with open(f'{project_path}algorithm_results.txt', 'w', encoding='UTF8', newline='') as f2:
+    writer = csv.writer(f2)
     # write the header
     writer.writerow(header)
     # write multiple rows

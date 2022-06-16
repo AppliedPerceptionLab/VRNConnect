@@ -28,6 +28,7 @@ public class Node
     public float Alpha;
     public int nodeDegree;
     public float nodeStrength;
+    public float clusteringCoef;
 
 
 
@@ -61,6 +62,7 @@ public class Node
         //sb.AppendLine(Alpha.ToString());
         sb.AppendLine("nodeDegree : " + nodeDegree.ToString());
         sb.AppendLine("nodeStrength : " + nodeStrength.ToString());
+        sb.AppendLine("Clustering Coefficient : " + clusteringCoef.ToString());
 
         return sb.ToString();
     }

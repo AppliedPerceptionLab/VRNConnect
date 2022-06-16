@@ -19,6 +19,10 @@ public class ReadCSV : MonoBehaviour
     private float maxEdgeSize = 0f;
     public float threshold = 0.1f;
     public Color defaultColor = Color.black;
+    private float weiAss;
+    private float binAss;
+    private float minDist;
+    private float maxDist;
 
     private Dictionary<string, GameObject> prefabs = new Dictionary<string, GameObject>();
 
@@ -82,6 +86,7 @@ public class ReadCSV : MonoBehaviour
         
         CreateGraph();
         RepositionBrain();
+        ReadMeasurements();
     }
 
     private void RepositionBrain()
@@ -406,6 +411,16 @@ public class ReadCSV : MonoBehaviour
          gradient.SetKeys(colorKey, alphaKey);
 
         return gradient.Evaluate(1f);
+    }
+
+    private void ReadMeasurements()
+    {
+
+    }
+
+    private void RunPythonScript()
+    {
+
     }
 
     // Update is called once per frame
