@@ -1,0 +1,14 @@
+algorithm_name         ,result              ,algorithm_cat
+assortativity_wei      ,0.036860508624000164,CORE
+assortativity_bin      ,0.019147671492902595,CORE
+breadth_distance_min   ,1.0                 ,BFS
+breadth_distance_max   ,3.0                 ,BFS
+breadth_distance_matrix,Separate file       ,BFS
+betweenness_wei        ,NaN                 ,Centrality
+agreement_wei          ,NaN                 ,Clustering
+betweenness_bin        ,NaN                 ,Clustering
+clustering_coef_wu     ,Separate file       ,Clustering
+backbone_wu            ,NaN                 ,Visualization
+NaN                    ,NaN                 ,NaN
+NaN                    ,NaN                 ,NaN
+NaN                    ,NaN                 ,NaN
