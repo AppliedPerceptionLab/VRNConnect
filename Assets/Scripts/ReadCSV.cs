@@ -19,10 +19,11 @@ public class ReadCSV : MonoBehaviour
     private float maxEdgeSize = 0f;
     public float threshold = 0.1f;
     public Color defaultColor = Color.black;
-    private float weiAss;
+    private string graphResTooltipText = "";
+    /*private float weiAss;
     private float binAss;
     private float minDist;
-    private float maxDist;
+    private float maxDist;*/
 
     private Dictionary<string, GameObject> prefabs = new Dictionary<string, GameObject>();
 
@@ -37,6 +38,15 @@ public class ReadCSV : MonoBehaviour
 
     [Tooltip("The file that contains the reference atlas of the brain")]
     TextAsset atlasColors;
+
+    [Tooltip("The file that contains algorithm results")]
+    TextAsset algResults;
+
+    [Tooltip("The file that contains shortest distances")]
+    TextAsset distFile;
+
+    [Tooltip("The file that contains clustering coefficients")]
+    TextAsset clusteringCoef;
 
     // Start is called before the first frame update
     void Start()
@@ -87,6 +97,7 @@ public class ReadCSV : MonoBehaviour
         CreateGraph();
         RepositionBrain();
         ReadMeasurements();
+        TooltipRes.ShowTooltip_Static(gameObject.name);
     }
 
     private void RepositionBrain()
@@ -415,7 +426,37 @@ public class ReadCSV : MonoBehaviour
 
     private void ReadMeasurements()
     {
+        algResults = Resources.Load<TextAsset>("algorithm_results");
+        //distFile = Resources.Load<TextAsset>("breadth_distance");
+        clusteringCoef = Resources.Load<TextAsset>("clustering_coef");
 
+        string[] results = algResults.text.Split(new char[] { '\n' });
+        //string[] AtlasNode = atlas.text.Split(new char[] { '\n' });
+        string[] clustCoef = clusteringCoef.text.Split(new char[] { '\n' });
+
+        for (int i = 1; i < clustCoef.Length - 1; i++)
+        {
+            string[] Row = clustCoef[i].Split(new char[] { ',' });
+            int nodeID = 0;
+            int.TryParse(Row[0], out nodeID);
+            float.TryParse(Row[1], out nodes[nodeID].clusteringCoef);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < results.Length - 1; i++)
+        {
+            if(i==0)
+            {
+                sb.AppendLine(results[i]);
+                sb.AppendLine("***********************");
+            } 
+            else
+            {
+                string[] Row = results[i].Split(new char[] { ',' });
+                sb.AppendLine(Row[0] + ":\t" + Row[1] + "\t" + Row[2]);
+            }
+        }
+        graphResTooltipText = sb.ToString();
     }
 
     private void RunPythonScript()
