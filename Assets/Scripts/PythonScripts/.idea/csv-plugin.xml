@@ -24,6 +24,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/breadth_distance.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/clustering_coef.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/hcpmmp1.csv">
           <value>
             <Attribute>
