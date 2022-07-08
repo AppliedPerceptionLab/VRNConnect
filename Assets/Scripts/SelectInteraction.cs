@@ -5,7 +5,7 @@ using UnityEngine;
 public class SelectInteraction : MonoBehaviour
 {
     Color defaultColor;
-    public GameObject brain;
+    [SerializeField] private GameObject brain;
     private bool nodeSelected = false;
     //TODO fix the bug with selection/hovering over 2,3 nodes in a straight line
     public void OnHoverOver()
@@ -22,7 +22,10 @@ public class SelectInteraction : MonoBehaviour
 
     public void OnHoverEnd()
     {
-        GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+        if (!nodeSelected)
+        {
+            GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+        }
         if(!nodeSelected)
         {
             TooltipUI.HideTooltip_Static();
@@ -43,6 +46,10 @@ public class SelectInteraction : MonoBehaviour
 
     public void OnUnselected()
     {
+        if (nodeSelected)
+        {
+            GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+        }
         brain.GetComponent<ReadCSV>().EnableEdgeOfNode(gameObject.name, false);
         TooltipUI.HideTooltip_Static();
         nodeSelected = false;
