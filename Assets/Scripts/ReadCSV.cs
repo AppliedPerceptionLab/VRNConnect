@@ -362,7 +362,7 @@ public class ReadCSV : MonoBehaviour
                         e.gameObject.SetActive(enable || showAllEdges);
                     } else
                     {
-                        //Destroy gameObject
+                        e.gameObject.SetActive(false); //Destroy gameObject
                     }
                 }
             }
@@ -457,6 +457,17 @@ public class ReadCSV : MonoBehaviour
             }
         }
         graphResTooltipText = sb.ToString();
+    }
+    
+    public void OnThresholdChange()
+    {
+        for (int i = 0; i < nodes.Count && i < 360; i++)
+        {
+            Node n = nodes[i];
+            nodes[i].nodeDegree = (int)(calculateNodeDegree(n, true));
+            nodes[i].nodeStrength = calculateNodeDegree(n, false);
+            EnableEdgeOfNode(n.regionName, showAllEdges);
+        }
     }
 
     private void RunPythonScript()
