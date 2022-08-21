@@ -9,8 +9,8 @@ public class BrainRotator : MonoBehaviour
 
     //public static BrainManipulation instance { get; private set; }
     public PrimaryButtonWatcher watcher;
-    public bool IsPressed = false; // used to display button state in the Unity Inspector window
     public Vector3 rotationAngle = new Vector3(45, 0, 0);
+    public Quaternion FirstPosition;
     public float rotationDuration = 0.25f; // seconds
     private Quaternion offRotation;
     private Quaternion onRotation;
@@ -22,12 +22,12 @@ public class BrainRotator : MonoBehaviour
         //instance = this;
         watcher.primaryButtonPress.AddListener(onPrimaryButtonEvent);
         offRotation = this.transform.rotation;
+        FirstPosition = offRotation;
         onRotation = Quaternion.Euler(rotationAngle) * offRotation;
     }
 
     public void onPrimaryButtonEvent(bool pressed)
     {
-        IsPressed = pressed;
         if (rotator != null)
             StopCoroutine(rotator);
         if (pressed)
@@ -52,6 +52,10 @@ public class BrainRotator : MonoBehaviour
        // yield return null;
     }
 
+    public void OnReset()
+    {
+        this.transform.rotation = FirstPosition;
+    }
     // Update is called once per frame
     void Update()
     {

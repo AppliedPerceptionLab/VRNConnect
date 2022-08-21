@@ -97,7 +97,7 @@ public class ReadCSV : MonoBehaviour
         CreateGraph();
         RepositionBrain();
         ReadMeasurements();
-        TooltipRes.ShowTooltip_Static(gameObject.name);
+        //TooltipRes.ShowTooltip_Static(gameObject.name);
     }
 
     private void RepositionBrain()
@@ -461,12 +461,12 @@ public class ReadCSV : MonoBehaviour
 
     private void RunPythonScript()
     {
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 }
