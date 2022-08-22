@@ -467,21 +467,20 @@ public class ReadCSV : MonoBehaviour
     
     public void OnThresholdChange()
     {
-        selectedNodes.Clear();
-        nodesSelected = 0;
+        resetNodesEmission();
         for (int i = 0; i < nodes.Count && i < 360; i++)
         {
             Node n = nodes[i];
             nodes[i].nodeDegree = (int)(calculateNodeDegree(n, true));
             nodes[i].nodeStrength = calculateNodeDegree(n, false);
             GameObject.Find(n.regionName).GetComponent<MeshRenderer>().material.DisableKeyword("_EMISSION");
-            GameObject.Find(n.regionName).GetComponent<SelectInteraction>().nodeSelected = false;
             EnableEdgeOfNode(n.regionName, showAllEdges);
         }
     }
 
     public void addNodetoQueue(string nodeName)
     {
+        Debug.unityLogger.Log(LogType.Warning,nodeName);
         if (nodesSelected<numberOfSelections)
         {
             Node n = FindNode(nodeName);
@@ -494,21 +493,24 @@ public class ReadCSV : MonoBehaviour
         }
         else
         {
-            if (!shownFlag)
-            {
-                shownFlag = showPath();
-            }
-            else
-            {
-                resetNodesEmission();
-                shownFlag = false;
-                addNodetoQueue(nodeName);
-            }
+            // if (!shownFlag)
+            // {
+            //     shownFlag = showPath();
+            // }
+            resetNodesEmission();
+            shownFlag = false;
+            addNodetoQueue(nodeName);
         }
     }
 
     private bool showPath()
     {
+        Debug.unityLogger.Log(LogType.Error,selectedNodes.Count);
+        foreach (var node in selectedNodes)
+        {
+            Debug.unityLogger.Log(LogType.Warning,node.regionName);
+        }
+        
         diableAllOtherEdges();
         foreach (Edge e in edges)
         {
@@ -519,8 +521,21 @@ public class ReadCSV : MonoBehaviour
                 e.gameObject.GetComponent<MeshRenderer>().material.SetColor("_Color", e.edgeColor);
                 e.gameObject.SetActive(true);
             }
+            
+            if (e.node1Id == selectedNodes[1].nodeId || e.node2Id == selectedNodes[0].nodeId)
+            {
+                float width = CalculateWidth(e.strenght);
+                e.gameObject.transform.localScale = new Vector3(width, e.offset.magnitude / 2.0f, width);
+                e.gameObject.GetComponent<MeshRenderer>().material.SetColor("_Color", e.edgeColor);
+                e.gameObject.SetActive(true);
+            }
 
             if (e.node1Id == selectedNodes[0].nodeId && e.node2Id == selectedNodes[1].nodeId)
+            {
+                e.gameObject.GetComponent<MeshRenderer>().material.EnableKeyword("_EMISSION");
+            }
+            
+            if (e.node1Id == selectedNodes[1].nodeId && e.node2Id == selectedNodes[0].nodeId)
             {
                 e.gameObject.GetComponent<MeshRenderer>().material.EnableKeyword("_EMISSION");
             }
@@ -544,6 +559,7 @@ public class ReadCSV : MonoBehaviour
         foreach (var node in selectedNodes)
         {
             GameObject.Find(node.regionName).GetComponent<MeshRenderer>().material.DisableKeyword("_EMISSION");
+            GameObject.Find(node.regionName).GetComponent<SelectInteraction>().nodeSelected = false;
         }
         selectedNodes.Clear();
     }
