@@ -6,7 +6,7 @@ public class SelectInteraction : MonoBehaviour
 {
     Color defaultColor;
     [SerializeField] private GameObject brain;
-    private bool nodeSelected = false;
+    public bool nodeSelected = false;
     //TODO fix the bug with selection/hovering over 2,3 nodes in a straight line
     public void OnHoverOver()
     {
@@ -38,6 +38,7 @@ public class SelectInteraction : MonoBehaviour
     {
         brain.GetComponent<ReadCSV>().EnableEdgeOfNode(gameObject.name, true);
         string tooltipText = brain.GetComponent<ReadCSV>().GetTooltipTextForNode(gameObject.name);
+        brain.GetComponent<ReadCSV>().addNodetoQueue(gameObject.name);
         TooltipUI.ShowTooltip_Static(tooltipText);
         nodeSelected = true;
         //GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
@@ -45,7 +46,7 @@ public class SelectInteraction : MonoBehaviour
     }
 
     public void OnUnselected()
-    {
+    {   //At the moment I am not using this one
         if (nodeSelected)
         {
             GetComponent<Renderer>().material.DisableKeyword("_EMISSION");

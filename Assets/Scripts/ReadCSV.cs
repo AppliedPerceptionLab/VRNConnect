@@ -10,6 +10,10 @@ public class ReadCSV : MonoBehaviour
     public Vector3 scale = new Vector3(50.0f, 50.0f, 50.0f);
     public Vector3 rotate = new Vector3(90.0f, 0.0f, 0.0f);
     public Vector3 sphereSize = new Vector3(0.05f, 0.05f, 0.05f);
+    public const int numberOfSelections = 2;
+    private int nodesSelected = 0;
+    bool shownFlag = false;
+    public static List<Node> selectedNodes = new List<Node>();
     public static List<Node> nodes = new List<Node>();
     public static List<Edge> edges = new List<Edge>();
     public Boolean showAllNodes = true;
@@ -332,6 +336,7 @@ public class ReadCSV : MonoBehaviour
                     if (width > 0f)
                     {
                         e.gameObject.transform.localScale = new Vector3(width, e.offset.magnitude / 2.0f, width);
+                        e.gameObject.GetComponent<MeshRenderer>().material.DisableKeyword("_EMISSION");
                         if(showAllEdges)
                         {
                             if (edgeColoring)
@@ -362,7 +367,8 @@ public class ReadCSV : MonoBehaviour
                         e.gameObject.SetActive(enable || showAllEdges);
                     } else
                     {
-                        e.gameObject.SetActive(false); //Destroy gameObject
+                        e.gameObject.SetActive(false);//Destroy gameObject
+                        e.gameObject.GetComponent<MeshRenderer>().material.DisableKeyword("_EMISSION");
                     }
                 }
             }
@@ -461,13 +467,85 @@ public class ReadCSV : MonoBehaviour
     
     public void OnThresholdChange()
     {
+        selectedNodes.Clear();
+        nodesSelected = 0;
         for (int i = 0; i < nodes.Count && i < 360; i++)
         {
             Node n = nodes[i];
             nodes[i].nodeDegree = (int)(calculateNodeDegree(n, true));
             nodes[i].nodeStrength = calculateNodeDegree(n, false);
+            GameObject.Find(n.regionName).GetComponent<MeshRenderer>().material.DisableKeyword("_EMISSION");
+            GameObject.Find(n.regionName).GetComponent<SelectInteraction>().nodeSelected = false;
             EnableEdgeOfNode(n.regionName, showAllEdges);
         }
+    }
+
+    public void addNodetoQueue(string nodeName)
+    {
+        if (nodesSelected<numberOfSelections)
+        {
+            Node n = FindNode(nodeName);
+            selectedNodes.Add(n);
+            nodesSelected++;
+            if (nodesSelected == numberOfSelections)
+            {
+                shownFlag = showPath();
+            }
+        }
+        else
+        {
+            if (!shownFlag)
+            {
+                shownFlag = showPath();
+            }
+            else
+            {
+                resetNodesEmission();
+                shownFlag = false;
+                addNodetoQueue(nodeName);
+            }
+        }
+    }
+
+    private bool showPath()
+    {
+        diableAllOtherEdges();
+        foreach (Edge e in edges)
+        {
+            if (e.node1Id == selectedNodes[0].nodeId || e.node2Id == selectedNodes[1].nodeId)
+            {
+                float width = CalculateWidth(e.strenght);
+                e.gameObject.transform.localScale = new Vector3(width, e.offset.magnitude / 2.0f, width);
+                e.gameObject.GetComponent<MeshRenderer>().material.SetColor("_Color", e.edgeColor);
+                e.gameObject.SetActive(true);
+            }
+
+            if (e.node1Id == selectedNodes[0].nodeId && e.node2Id == selectedNodes[1].nodeId)
+            {
+                e.gameObject.GetComponent<MeshRenderer>().material.EnableKeyword("_EMISSION");
+            }
+        }
+
+        return true;
+    }
+
+    private void diableAllOtherEdges()
+    {
+        foreach (Edge e in edges)
+        {
+            e.gameObject.SetActive(false);
+            e.gameObject.GetComponent<MeshRenderer>().material.DisableKeyword("_EMISSION");
+        }
+    }
+
+    private void resetNodesEmission()
+    {
+        nodesSelected = 0;
+        foreach (var node in selectedNodes)
+        {
+            GameObject.Find(node.regionName).GetComponent<MeshRenderer>().material.DisableKeyword("_EMISSION");
+        }
+        selectedNodes.Clear();
     }
 
     private void RunPythonScript()
@@ -476,6 +554,7 @@ public class ReadCSV : MonoBehaviour
     }
 
     // Update is called once per frame
+
     void Update()
     {
         
