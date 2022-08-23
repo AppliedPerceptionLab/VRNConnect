@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.XR;
 using UnityEngine.XR.Management;
 
 public class DetectVR : MonoBehaviour
@@ -12,7 +8,7 @@ public class DetectVR : MonoBehaviour
     public GameObject desktopCharacter;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         if (startInVR)
         {
@@ -38,6 +34,7 @@ public class DetectVR : MonoBehaviour
                 desktopCharacter.SetActive(true);
                 return;
             }
+
             Debug.Log("XRLoader is not null");
             xrOrigin.SetActive(true);
             desktopCharacter.SetActive(false);
@@ -47,6 +44,5 @@ public class DetectVR : MonoBehaviour
             xrOrigin.SetActive(false);
             desktopCharacter.SetActive(true);
         }
-
     }
 }

@@ -1,53 +1,49 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Text;
-using UnityEngine;
 
 public class Node
 {
+    public float Alpha;
+    public float Blue;
+    public float clusteringCoef;
+    public string cortex;
+    public int CortexID;
+    public float Green;
+    public string Lobe;
+    public string LR;
+    public string[] NodeConnection;
+
+    public int nodeDegree;
+
     //From nodeId 361-379 are not needed
     public int nodeId;
-    public string[] NodeConnection;
-    public string regionName;
-    public string regionLongName;
-    public string regionIdLabel;
-    public string LR;
+    public float nodeStrength;
+    public float Red;
     public string region;
-    public string Lobe;
-    public string cortex;
     public int regionID;
-    public int CortexID;
+    public string regionIdLabel;
+    public string regionLongName;
+    public string regionName;
+    public int volume;
     public float xCog;
     public float yCog;
     public float zCog;
-    public int volume;
-    public float Red;
-    public float Green;
-    public float Blue;
-    public float Alpha;
-    public int nodeDegree;
-    public float nodeStrength;
-    public float clusteringCoef;
-
 
 
     public float ConvertNodeConnection(string c)
     {
         float res;
-        float.TryParse(c, result: out res);
+        float.TryParse(c, out res);
         return res;
-        
     }
 
     internal string GetTooltipText()
     {
-        StringBuilder sb = new StringBuilder();
+        var sb = new StringBuilder();
         sb.AppendLine("***" + regionName + "***");
         sb.AppendLine("Full Region Name : " + regionLongName);
         //sb.AppendLine("regionIdLabel : " + regionIdLabel);
         sb.AppendLine("Lobe : " + Lobe);
-        sb.AppendLine("Left/Right: "+ LR);
+        sb.AppendLine("Left/Right: " + LR);
         sb.AppendLine("Region : " + region);
         sb.AppendLine("Cortex : " + cortex);
         //sb.AppendLine("regionID : " + regionID.ToString());

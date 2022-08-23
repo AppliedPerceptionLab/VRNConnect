@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BrainRotator : MonoBehaviour
@@ -9,7 +8,7 @@ public class BrainRotator : MonoBehaviour
 
     //public static BrainManipulation instance { get; private set; }
     public PrimaryButtonWatcher watcher;
-    public Vector3 rotationAngle = new Vector3(45, 0, 0);
+    public Vector3 rotationAngle = new(45, 0, 0);
     public Quaternion FirstPosition;
     public float rotationDuration = 0.25f; // seconds
     private Quaternion offRotation;
@@ -17,13 +16,18 @@ public class BrainRotator : MonoBehaviour
     private Coroutine rotator;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         //instance = this;
         watcher.primaryButtonPress.AddListener(onPrimaryButtonEvent);
-        offRotation = this.transform.rotation;
+        offRotation = transform.rotation;
         FirstPosition = offRotation;
         onRotation = Quaternion.Euler(rotationAngle) * offRotation;
+    }
+
+    // Update is called once per frame
+    private void Update()
+    {
     }
 
     public void onPrimaryButtonEvent(bool pressed)
@@ -31,7 +35,7 @@ public class BrainRotator : MonoBehaviour
         if (rotator != null)
             StopCoroutine(rotator);
         if (pressed)
-            rotator = StartCoroutine(AnimateRotation(this.transform.rotation, onRotation));
+            rotator = StartCoroutine(AnimateRotation(transform.rotation, onRotation));
         /*else
             rotator = StartCoroutine(AnimateRotation(this.transform.rotation, offRotation));*/
     }
@@ -43,22 +47,17 @@ public class BrainRotator : MonoBehaviour
         {
             transform.Rotate(new Vector3(Time.deltaTime * 20, 0, 0), Space.World);
             yield return null;
-         // transform.rotation = Quaternion.Lerp(fromRotation, toRotation, t / rotationDuration);
-         // t += Time.deltaTime;
-         // yield return null;
+            // transform.rotation = Quaternion.Lerp(fromRotation, toRotation, t / rotationDuration);
+            // t += Time.deltaTime;
+            // yield return null;
         }
-       // onRotation = Quaternion.Euler(rotationAngle) * onRotation;
-       // transform.Rotate(new Vector3(0, Time.deltaTime *20 ,0));
-       // yield return null;
+        // onRotation = Quaternion.Euler(rotationAngle) * onRotation;
+        // transform.Rotate(new Vector3(0, Time.deltaTime *20 ,0));
+        // yield return null;
     }
 
     public void OnReset()
     {
-        this.transform.rotation = FirstPosition;
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
+        transform.rotation = FirstPosition;
     }
 }

@@ -1,22 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SelectionManager : MonoBehaviour
 //Currently not using this one
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     [SerializeField] private string selectableTag = "Selectable";
     [SerializeField] private Material highlightMaterial;
     [SerializeField] private Material defaultMaterial;
 
     private Transform _selection;
+
+    // Start is called before the first frame update
+    private void Start()
+    {
+    }
 
     private void Update()
     {
@@ -26,9 +23,9 @@ public class SelectionManager : MonoBehaviour
             selectionRenderer.material = defaultMaterial;
             _selection = null;
         }
-        
+
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        GameObject RCtrl = GameObject.Find("RightHand Controller");
+        var RCtrl = GameObject.Find("RightHand Controller");
         //var ray = RCtrl.GetComponent<>();
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
@@ -37,10 +34,7 @@ public class SelectionManager : MonoBehaviour
             if (selection.CompareTag(selectableTag))
             {
                 var selectionRenderer = selection.GetComponent<Renderer>();
-                if (selectionRenderer != null)
-                {
-                    selectionRenderer.material = highlightMaterial;
-                }
+                if (selectionRenderer != null) selectionRenderer.material = highlightMaterial;
 
                 _selection = selection;
             }

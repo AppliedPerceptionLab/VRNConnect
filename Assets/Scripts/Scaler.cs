@@ -1,28 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Text;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Scaler : MonoBehaviour
 {
     public GameObject brain;
     public TextMeshPro tmpro;
     public UnityEngine.UI.Slider slider;
-    Vector3 localScale = new Vector3(1, 1, 1);
+
+    private Vector3 localScale = new(1, 1, 1);
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         localScale = brain.transform.localScale;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
     }
-    
+
     public void OnValueChanged(float newValue)
     {
         var currentScale = localScale;
@@ -40,6 +38,5 @@ public class Scaler : MonoBehaviour
         slider.SetValueWithoutNotify(10);
         tmpro.SetText("1");
         brain.transform.localScale = localScale;
-        
     }
 }
