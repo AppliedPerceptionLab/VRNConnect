@@ -821,7 +821,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: {x: 50, y: 50, z: 50}
-  rotate: {x: 90, y: 0, z: 0}
   sphereSize: {x: 0.05, y: 0.05, z: 0.05}
   edgeColoring: 1
   shadowEffect: 0
@@ -5369,7 +5368,7 @@ RectTransform:
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &1623610062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5424,7 +5423,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 32
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0

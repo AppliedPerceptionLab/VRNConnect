@@ -32,13 +32,24 @@ public class TooltipUI : MonoBehaviour
     private void SetText(string tooltipText)
     {
         textMeshPro.SetText(tooltipText);
+        textMeshPro.alignment = TextAlignmentOptions.Left;
         textMeshPro.ForceMeshUpdate();
 
-        var textSize = new Vector2(textMeshPro.transform.localScale.x * textMeshPro.preferredWidth,
-            textMeshPro.transform.localScale.y * textMeshPro.preferredHeight);
+        var localScale = textMeshPro.transform.localScale;
+        var renVal = textMeshPro.GetRenderedValues(false);
+        var textSize = new Vector2(localScale.x * renVal.x,
+            localScale.y * renVal.y);
+        // var textSize = new Vector2(localScale.x * textMeshPro.preferredWidth,
+        //     localScale.y * textMeshPro.preferredHeight);
+        var localPosition = textMeshPro.transform.localPosition;
+        var textPos = new Vector2(localPosition.x,
+            localPosition.y);
         var padding = textPadding;
-        Debug.Log("RenderedValues: " + textMeshPro.GetRenderedValues());
+        Debug.Log("RenderedValues: GetRenderedValues" + textMeshPro.GetRenderedValues(false));
+        Debug.Log("RenderedValues: textSize" + textSize);
+        Debug.Log("RenderedValues: padding" + padding);
         backgroundTransform.localScale = new Vector3(textSize.x + padding.x, textSize.y + padding.y, 1f);
+        textMeshPro.transform.localPosition = new Vector3(-textSize.x/2, 0f, -0.001f);
 
         //TODO check if the size(height) is not bigger than transform y value
     }

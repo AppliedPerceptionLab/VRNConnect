@@ -39,15 +39,15 @@ public class Node
     internal string GetTooltipText()
     {
         var sb = new StringBuilder();
-        sb.AppendLine("***" + regionName + "***");
-        sb.AppendLine("Full Region Name : " + regionLongName);
+        sb.AppendLine("****" + regionName + "****");
+        sb.AppendLine("Full Region Name : \t" + regionLongName);
         //sb.AppendLine("regionIdLabel : " + regionIdLabel);
-        sb.AppendLine("Lobe : " + Lobe);
-        sb.AppendLine("Left/Right: " + LR);
-        sb.AppendLine("Region : " + region);
-        sb.AppendLine("Cortex : " + cortex);
+        sb.AppendLine("Lobe : \t\t\t" + Lobe);
+        sb.AppendLine("Left/Right: \t\t\t" + LR);
+        sb.AppendLine("Region : \t\t\t" + region);
+        sb.AppendLine("Cortex : \t\t\t" + cortex);
         //sb.AppendLine("regionID : " + regionID.ToString());
-        sb.AppendLine("CortexID : " + CortexID.ToString());
+        sb.AppendLine("CortexID : \t\t\t" + CortexID.ToString());
         //sb.AppendLine(xCog.ToString());
         //sb.AppendLine(yCog.ToString());
         //sb.AppendLine(zCog.ToString());
@@ -56,9 +56,9 @@ public class Node
         //sb.AppendLine(Green.ToString());
         //sb.AppendLine(Blue.ToString());
         //sb.AppendLine(Alpha.ToString());
-        sb.AppendLine("nodeDegree : " + nodeDegree.ToString());
-        sb.AppendLine("nodeStrength : " + nodeStrength.ToString());
-        sb.AppendLine("Clustering Coefficient : " + clusteringCoef.ToString());
+        sb.AppendLine("Degree : \t\t\t" + nodeDegree.ToString());
+        sb.AppendLine("Strength : \t\t\t" + nodeStrength.ToString());
+        sb.AppendLine("Clustering Coefficient : \t" + clusteringCoef.ToString());
 
         return sb.ToString();
     }

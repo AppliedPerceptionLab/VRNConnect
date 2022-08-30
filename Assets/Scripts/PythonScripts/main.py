@@ -85,7 +85,7 @@ data = [
     ['betweenness_bin', 'NaN', 'Clustering'],
     ['clustering_coef_wu', 'Separate file', 'Clustering'],
     ['backbone_wu', 'NaN', 'Visualization'],
-    ['NaN', 'NaN', 'NaN'],
+    ['rich_club', 'NaN', 'Vector of rich club coefficients'],
     ['NaN', 'NaN', 'NaN'],
     ['NaN', 'NaN', 'NaN']
 ]
