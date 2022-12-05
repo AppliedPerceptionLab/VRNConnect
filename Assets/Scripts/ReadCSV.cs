@@ -6,6 +6,7 @@ public class ReadCSV : MonoBehaviour
 {
     public const int numberOfSelections = 2;
     public static List<Node> selectedNodes = new();
+    public static List<Edge> highlightedEdge = new();
     public static List<Node> nodes = new();
 
     public static List<Edge> edges = new();
@@ -13,6 +14,7 @@ public class ReadCSV : MonoBehaviour
     //private Graph<Vector3, float> graph;
     //public Vector3 CenterOfMass = new Vector3(0.0f, 0.0f, 0.0f);
     public Vector3 scale = new(50.0f, 50.0f, 50.0f);
+
     // public Vector3 rotate = new(90.0f, 0.0f, 0.0f);
     public Vector3 sphereSize = new(0.05f, 0.05f, 0.05f);
     public bool edgeColoring = false;
@@ -468,7 +470,6 @@ public class ReadCSV : MonoBehaviour
             var n = FindNode(nodeName);
             selectedNodes.Add(n);
             nodesSelected++;
-            if (nodesSelected == numberOfSelections) ShownFlag = showPath();
         }
         else
         {
@@ -479,6 +480,14 @@ public class ReadCSV : MonoBehaviour
             resetNodesEmission();
             ShownFlag = false;
             addNodetoQueue(nodeName);
+        }
+
+        if (nodesSelected == numberOfSelections) ShownFlag = showPath();
+
+        if (nodesSelected == 1)
+        {
+            diableAllOtherEdges();
+            EnableEdgeOfNode(nodeName,true);
         }
     }
 
@@ -507,10 +516,16 @@ public class ReadCSV : MonoBehaviour
             }
 
             if (e.node1Id == selectedNodes[0].nodeId && e.node2Id == selectedNodes[1].nodeId)
+            {
                 e.gameObject.GetComponent<MeshRenderer>().material.EnableKeyword("_EMISSION");
+                highlightedEdge.Add(e);
+            }
 
             if (e.node1Id == selectedNodes[1].nodeId && e.node2Id == selectedNodes[0].nodeId)
+            {
                 e.gameObject.GetComponent<MeshRenderer>().material.EnableKeyword("_EMISSION");
+                highlightedEdge.Add(e);
+            }
         }
 
         return true;
@@ -534,7 +549,13 @@ public class ReadCSV : MonoBehaviour
             GameObject.Find(node.regionName).GetComponent<SelectInteraction>().nodeSelected = false;
         }
 
+        foreach (var e in highlightedEdge)
+        {
+            e.gameObject.GetComponent<MeshRenderer>().material.DisableKeyword("_EMISSION");
+        }
+
         selectedNodes.Clear();
+        highlightedEdge.Clear();
     }
 
     private void RunPythonScript()
