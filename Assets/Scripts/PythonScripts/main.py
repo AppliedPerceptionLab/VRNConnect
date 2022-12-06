@@ -72,6 +72,9 @@ pd.DataFrame.from_dict(clus_coef).to_csv(f'{project_path}clustering_coef.txt')
 # bct.agreement_weighted()
 # bct.backbone_wu
 # bct.betweenness_bin
+# 1.bct.distance_bin()
+# 2.bct.distance_wei() -> have to change strength to weight (strong node have lesser weight)
+# 3.bct.retrieve_shortest_path()
 ##################################################################
 header = ['algorithm_name', 'result', 'algorithm_cat']
 data = [

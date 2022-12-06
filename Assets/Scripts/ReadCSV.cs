@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Text;
+using UnityEditor.Scripting.Python;
 using UnityEngine;
 
 public class ReadCSV : MonoBehaviour
@@ -64,6 +66,7 @@ public class ReadCSV : MonoBehaviour
         var Node = brainSC.text.Split(new char[] { '\n' });
         var AtlasNode = atlas.text.Split(new char[] { '\n' });
         var AtlasNodeColor = atlasColors.text.Split(new char[] { '\n' });
+        RunPythonScript("main.py");
         // Debug.Log(Node.Length);
 
         for (var i = 0; i < Node.Length - 1; i++)
@@ -473,10 +476,6 @@ public class ReadCSV : MonoBehaviour
         }
         else
         {
-            // if (!shownFlag)
-            // {
-            //     shownFlag = showPath();
-            // }
             resetNodesEmission();
             ShownFlag = false;
             addNodetoQueue(nodeName);
@@ -493,6 +492,8 @@ public class ReadCSV : MonoBehaviour
 
     private bool showPath()
     {
+        //TODO have to modify this to show only shortest path
+        
         Debug.unityLogger.Log(LogType.Error, selectedNodes.Count);
         foreach (var node in selectedNodes) Debug.unityLogger.Log(LogType.Warning, node.regionName);
 
@@ -528,6 +529,7 @@ public class ReadCSV : MonoBehaviour
             }
         }
 
+        RunPythonScript("distance.py");
         return true;
     }
 
@@ -558,8 +560,10 @@ public class ReadCSV : MonoBehaviour
         highlightedEdge.Clear();
     }
 
-    private void RunPythonScript()
+    private static void RunPythonScript(String fileName)
     {
+        Debug.unityLogger.Log(LogType.Warning,$"{Application.dataPath}/PythonScripts/{fileName}");
+        PythonRunner.RunFile($"{Application.dataPath}/PythonScripts/{fileName}");
     }
 
     public void ToggleShowAllEdges(bool toggle)
