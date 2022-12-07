@@ -1,6 +1,7 @@
 # This is a sample Python script.
 
 import csv
+import os
 
 import bct
 import numpy as np
@@ -10,7 +11,14 @@ import pandas as pd
 # importing the data
 from numpy import ndarray
 
-project_path = '../../Resources/'
+#for standAlone running
+# project_path = '../../Resources/'
+# res_path = project_path
+
+#for Unity running
+project_path = os.getcwd()+'\\externalFiles\\'
+res_path = os.getcwd()+'\\Assets\\Resources\\'
+
 df_region_color = pd.read_csv(f'{project_path}HCP-MMP1_RegionColor.csv', skipfooter=19, engine='python')
 df_region_list = pd.read_csv(f'{project_path}HCP-MMP1_UniqueRegionList.csv')
 df_main = pd.read_csv(f'{project_path}hcpmmp1.csv', skipfooter=19, header=None, engine='python')
@@ -53,9 +61,10 @@ print('Result of the assortativity_wei:' + wei_ass.__str__())
 print('Result of the assortativity_bin:' + bin_ass.__str__())
 
 breadth_dist = bct.breadthdist(ndarray_main_bin)
-pd.DataFrame.from_records(breadth_dist[1]).to_json(f'{project_path}breadth_distance.json')
-pd.DataFrame.from_records(breadth_dist[1]).to_csv(f'{project_path}breadth_distance.csv')
-pd.DataFrame.from_records(breadth_dist[1]).to_csv(f'{project_path}breadth_distance.txt')
+bfsFileName = 'breadth_distance'
+pd.DataFrame.from_records(breadth_dist[1]).to_json(f'{res_path}{bfsFileName}.json')
+pd.DataFrame.from_records(breadth_dist[1]).to_csv(f'{res_path}{bfsFileName}.csv')
+pd.DataFrame.from_records(breadth_dist[1]).to_csv(f'{res_path}{bfsFileName}.txt')
 print('Result of the breadth_dist:')
 print(breadth_dist[1])  # -we can get number of disconnected nodes from this one-#
 min_dist = breadth_dist[1].min()
@@ -64,9 +73,10 @@ max_dist = breadth_dist[1].max()
 clus_coef = bct.clustering_coef_wu(ndarray_main)
 print('Result of the clustering coef:')
 print(clus_coef)
-pd.DataFrame.from_dict(clus_coef).to_json(f'{project_path}clustering_coef.json')
-pd.DataFrame.from_dict(clus_coef).to_csv(f'{project_path}clustering_coef.csv')
-pd.DataFrame.from_dict(clus_coef).to_csv(f'{project_path}clustering_coef.txt')
+clusCoefFileName = 'clustering_coef'
+pd.DataFrame.from_dict(clus_coef).to_json(f'{res_path}{clusCoefFileName}.json')
+pd.DataFrame.from_dict(clus_coef).to_csv(f'{res_path}{clusCoefFileName}.csv')
+pd.DataFrame.from_dict(clus_coef).to_csv(f'{res_path}{clusCoefFileName}.txt')
 
 # bct.betweenness_wei
 # bct.agreement_weighted()
@@ -82,11 +92,11 @@ data = [
     ['assortativity_bin', bin_ass, 'CORE'],
     ['breadth_distance_min', min_dist, 'BFS'],
     ['breadth_distance_max', max_dist, 'BFS'],
-    ['breadth_distance_matrix', 'Separate file', 'BFS'],
+    ['breadth_distance_matrix', f'{bfsFileName}.json', 'BFS'],
     ['betweenness_wei', 'NaN', 'Centrality'],
     ['agreement_wei', 'NaN', 'Clustering'],
     ['betweenness_bin', 'NaN', 'Clustering'],
-    ['clustering_coef_wu', 'Separate file', 'Clustering'],
+    ['clustering_coef_wu', f'{clusCoefFileName}.json', 'Clustering'],
     ['backbone_wu', 'NaN', 'Visualization'],
     ['rich_club', 'NaN', 'Vector of rich club coefficients'],
     ['NaN', 'NaN', 'NaN'],
@@ -94,14 +104,14 @@ data = [
 ]
 
 # writing results to a csv file
-with open(f'{project_path}algorithm_results.csv', 'w', encoding='UTF8', newline='') as f1:
+with open(f'{res_path}algorithm_results.csv', 'w', encoding='UTF8', newline='') as f1:
     writer = csv.writer(f1)
     # write the header
     writer.writerow(header)
     # write multiple rows
     writer.writerows(data)
 
-with open(f'{project_path}algorithm_results.txt', 'w', encoding='UTF8', newline='') as f2:
+with open(f'{res_path}algorithm_results.txt', 'w', encoding='UTF8', newline='') as f2:
     writer = csv.writer(f2)
     # write the header
     writer.writerow(header)

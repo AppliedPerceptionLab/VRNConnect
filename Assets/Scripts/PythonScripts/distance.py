@@ -1,4 +1,5 @@
 import csv
+import os
 
 import bct
 import numpy as np
@@ -8,7 +9,14 @@ import pandas as pd
 # importing the data
 from numpy import ndarray
 
-project_path = '../../Resources/'
+#for standAlone running
+# project_path = '../../Resources/'
+# res_path = project_path
+
+#for Unity running
+project_path = os.getcwd()+'\\externalFiles\\'
+res_path = os.getcwd()+'\\Assets\\Resources\\'
+
 df_region_color = pd.read_csv(f'{project_path}HCP-MMP1_RegionColor.csv', skipfooter=19, engine='python')
 df_region_list = pd.read_csv(f'{project_path}HCP-MMP1_UniqueRegionList.csv')
 df_main = pd.read_csv(f'{project_path}hcpmmp1.csv', skipfooter=19, header=None, engine='python')
