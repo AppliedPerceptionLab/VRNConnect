@@ -36,7 +36,7 @@ public class Scaler : MonoBehaviour
     public void OnReset()
     {
         slider.SetValueWithoutNotify(10);
-        tmpro.SetText("1");
         brain.transform.localScale = localScale;
+        tmpro.SetText("1");
     }
 }

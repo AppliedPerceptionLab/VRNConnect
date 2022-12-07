@@ -7,7 +7,8 @@ public class BrainRotator : MonoBehaviour
     //[SerializeField] private GameObject LeftController;
 
     //public static BrainManipulation instance { get; private set; }
-    public PrimaryButtonWatcher watcher;
+    public PrimaryButtonWatcher pWatcher;
+    public SecondaryButtonWatcher sWatcher;
     public Vector3 rotationAngle = new(45, 0, 0);
     public Quaternion FirstPosition;
     public float rotationDuration = 0.25f; // seconds
@@ -19,7 +20,8 @@ public class BrainRotator : MonoBehaviour
     private void Start()
     {
         //instance = this;
-        watcher.primaryButtonPress.AddListener(onPrimaryButtonEvent);
+        pWatcher.primaryButtonPress.AddListener(onPrimaryButtonEvent);
+        sWatcher.ButtonPress.AddListener(onSecondaryButtonEvent);
         offRotation = transform.rotation;
         FirstPosition = offRotation;
         onRotation = Quaternion.Euler(rotationAngle) * offRotation;
@@ -35,17 +37,27 @@ public class BrainRotator : MonoBehaviour
         if (rotator != null)
             StopCoroutine(rotator);
         if (pressed)
-            rotator = StartCoroutine(AnimateRotation(transform.rotation, onRotation));
+            rotator = StartCoroutine(AnimateRotation(transform.rotation, onRotation, 1));
+        /*else
+            rotator = StartCoroutine(AnimateRotation(this.transform.rotation, offRotation));*/
+    }
+    
+    public void onSecondaryButtonEvent(bool pressed)
+    {
+        if (rotator != null)
+            StopCoroutine(rotator);
+        if (pressed)
+            rotator = StartCoroutine(AnimateRotation(transform.rotation, onRotation, -1));
         /*else
             rotator = StartCoroutine(AnimateRotation(this.transform.rotation, offRotation));*/
     }
 
-    private IEnumerator AnimateRotation(Quaternion fromRotation, Quaternion toRotation)
+    private IEnumerator AnimateRotation(Quaternion fromRotation, Quaternion toRotation, int direction)
     {
         //float t = 0;
         while (true)
         {
-            transform.Rotate(new Vector3(Time.deltaTime * 20, 0, 0), Space.World);
+            transform.Rotate(new Vector3(Time.deltaTime * 20 * direction, 0, 0), Space.World);
             yield return null;
             // transform.rotation = Quaternion.Lerp(fromRotation, toRotation, t / rotationDuration);
             // t += Time.deltaTime;

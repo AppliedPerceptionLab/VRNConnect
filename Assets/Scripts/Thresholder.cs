@@ -46,8 +46,8 @@ public class Thresholder : MonoBehaviour
     public void OnReset()
     {
         slider.SetValueWithoutNotify(50);
-        tmpro.SetText("10%");
         brain.GetComponent<ReadCSV>().threshold = 0.1f;
         brain.GetComponent<ReadCSV>().OnThresholdChange();
+        tmpro.SetText("10%");
     }
 }
