@@ -14,8 +14,18 @@ public class PyRunnerEditor : Editor
 
         if (GUILayout.Button("rerun scripts"))
         {
-            runMain();
-            runDistance();
+            if (script.runMainScript)
+            {
+                runMain();
+            }
+            if (script.runDistanceScript)
+            {
+                runDistance();
+            }
+            if (script.runPathScript)
+            {
+                runPathScript();
+            }
         }
     }
 
@@ -34,5 +44,10 @@ public class PyRunnerEditor : Editor
     public void runDistance()
     {
         RunPythonScript("distance.py");
+    }
+    
+    public void runPathScript()
+    {
+        //RunPythonScript("path.py");
     }
 }

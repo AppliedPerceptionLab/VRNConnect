@@ -3,11 +3,11 @@ assortativity_wei,0.036860508624000164,CORE
 assortativity_bin,0.019147671492902595,CORE
 breadth_distance_min,1.0,BFS
 breadth_distance_max,3.0,BFS
-breadth_distance_matrix,Separate file,BFS
+breadth_distance_matrix,breadth_distance.json,BFS
 betweenness_wei,NaN,Centrality
 agreement_wei,NaN,Clustering
 betweenness_bin,NaN,Clustering
-clustering_coef_wu,Separate file,Clustering
+clustering_coef_wu,clustering_coef.json,Clustering
 backbone_wu,NaN,Visualization
 rich_club,NaN,Vector of rich club coefficients
 NaN,NaN,NaN
