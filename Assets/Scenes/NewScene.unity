@@ -2215,7 +2215,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   runMainScript: 1
   runDistanceScript: 1
-  runPathScript: 1
 --- !u!4 &616768133
 Transform:
   m_ObjectHideFlags: 0
@@ -6317,7 +6316,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1851720858}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 057dfea0827c18840abdb6cc37d3b0e9, type: 3}
   m_Name: 
@@ -6970,7 +6969,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
 --- !u!114 &2097175271
 MonoBehaviour:
   m_ObjectHideFlags: 0

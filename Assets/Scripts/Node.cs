@@ -1,4 +1,5 @@
 using System.Text;
+using UnityEngine;
 
 public class Node
 {
@@ -11,6 +12,7 @@ public class Node
     public string Lobe;
     public string LR;
     public string[] NodeConnection;
+    public GameObject gameObject;
 
     public int nodeDegree;
 

@@ -60,15 +60,17 @@ bin_ass = bct.assortativity_bin(ndarray_main_bin, flag=0)
 print('Result of the assortativity_wei:' + wei_ass.__str__())
 print('Result of the assortativity_bin:' + bin_ass.__str__())
 
-breadth_dist = bct.breadthdist(ndarray_main_bin)
+# breadth_dist = bct.breadthdist(ndarray_main_bin)
 bfsFileName = 'breadth_distance'
-pd.DataFrame.from_records(breadth_dist[1]).to_json(f'{res_path}{bfsFileName}.json')
-pd.DataFrame.from_records(breadth_dist[1]).to_csv(f'{res_path}{bfsFileName}.csv')
-pd.DataFrame.from_records(breadth_dist[1]).to_csv(f'{res_path}{bfsFileName}.txt')
-print('Result of the breadth_dist:')
-print(breadth_dist[1])  # -we can get number of disconnected nodes from this one-#
-min_dist = breadth_dist[1].min()
-max_dist = breadth_dist[1].max()
+weighted_shortest_paths_FileName = 'weighted_shortest_paths'
+floydFileName = 'floyd_shortest_paths'
+# pd.DataFrame.from_records(breadth_dist[1]).to_json(f'{res_path}{bfsFileName}.json')
+# pd.DataFrame.from_records(breadth_dist[1]).to_csv(f'{res_path}{bfsFileName}.csv')
+# pd.DataFrame.from_records(breadth_dist[1]).to_csv(f'{res_path}{bfsFileName}.txt')
+# print('Result of the breadth_dist:')
+# print(breadth_dist[1])  # -we can get number of disconnected nodes from this one-#
+# min_dist = breadth_dist[1].min()
+# max_dist = breadth_dist[1].max()
 
 clus_coef = bct.clustering_coef_wu(ndarray_main)
 print('Result of the clustering coef:')
@@ -90,13 +92,17 @@ header = ['algorithm_name', 'result', 'algorithm_cat']
 data = [
     ['assortativity_wei', wei_ass, 'CORE'],
     ['assortativity_bin', bin_ass, 'CORE'],
-    ['breadth_distance_min', min_dist, 'BFS'],
-    ['breadth_distance_max', max_dist, 'BFS'],
-    ['breadth_distance_matrix', f'{bfsFileName}.json', 'BFS'],
+    # ['breadth_distance_min', min_dist, 'BFS'],
+    # ['breadth_distance_max', max_dist, 'BFS'],
+    ['breadth_distance_matrix', f'{bfsFileName}.csv', 'BFS'],
+    ['weighted_distance_matrix', f'{weighted_shortest_paths_FileName}.csv', 'Dijkstra'],
+    ['floyd_shortest_paths_spl_matrix', f'{floydFileName}_spl.csv', 'Floyd'],
+    ['floyd_shortest_paths_hops_matrix', f'{floydFileName}_hops.csv', 'Floyd'],
+    ['floyd_shortest_paths_pmat_matrix', f'{floydFileName}_pmat.csv', 'Floyd'],
     ['betweenness_wei', 'NaN', 'Centrality'],
     ['agreement_wei', 'NaN', 'Clustering'],
     ['betweenness_bin', 'NaN', 'Clustering'],
-    ['clustering_coef_wu', f'{clusCoefFileName}.json', 'Clustering'],
+    ['clustering_coef_wu', f'{clusCoefFileName}.csv', 'Clustering'],
     ['backbone_wu', 'NaN', 'Visualization'],
     ['rich_club', 'NaN', 'Vector of rich club coefficients'],
     ['NaN', 'NaN', 'NaN'],

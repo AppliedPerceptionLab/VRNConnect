@@ -22,10 +22,10 @@ public class PyRunnerEditor : Editor
             {
                 runDistance();
             }
-            if (script.runPathScript)
-            {
-                runPathScript();
-            }
+            // if (script.runPathScript)
+            // {
+            //     runPathScript();
+            // }
         }
     }
 

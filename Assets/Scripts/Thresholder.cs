@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -14,7 +15,7 @@ public class Thresholder : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        brain.GetComponent<ReadCSV>().threshold = 0.1f;
+        brain.GetComponent<ReadCSV>().threshold = 0.05f;
         brain.GetComponent<ReadCSV>().OnThresholdChange();
     }
 
@@ -25,29 +26,28 @@ public class Thresholder : MonoBehaviour
 
     public void OnValueChanged(float newValue)
     {
+        float currentThreshold;
         if (newValue > 50)
         {
-            var currentThreshold = (float)Math.Log10(newValue * 10) / 10;
+            currentThreshold = (float)Math.Log10(newValue * 10) / 10;
             Debug.Log("currentThreshold = " + currentThreshold);
-            brain.GetComponent<ReadCSV>().threshold = currentThreshold;
-            brain.GetComponent<ReadCSV>().OnThresholdChange();
-            tmpro.SetText(new StringBuilder().Append(currentThreshold * 100 + "%").ToString());
         }
         else
         {
-            var currentThreshold = newValue / 500;
-            Debug.Log("currentThreshold = " + currentThreshold);
-            brain.GetComponent<ReadCSV>().threshold = currentThreshold;
-            brain.GetComponent<ReadCSV>().OnThresholdChange();
-            tmpro.SetText(new StringBuilder().Append(currentThreshold + "%").ToString());
+            currentThreshold = newValue / 500;
         }
+        
+        Debug.Log("currentThreshold = " + currentThreshold);
+        brain.GetComponent<ReadCSV>().threshold = currentThreshold;
+        brain.GetComponent<ReadCSV>().OnThresholdChange();
+        tmpro.SetText(new StringBuilder().Append((currentThreshold*100).ToString("0.00")).Append("%").ToString());
     }
 
     public void OnReset()
     {
-        slider.SetValueWithoutNotify(50);
-        brain.GetComponent<ReadCSV>().threshold = 0.1f;
+        slider.SetValueWithoutNotify(25);
+        brain.GetComponent<ReadCSV>().threshold = 0.05f;
         brain.GetComponent<ReadCSV>().OnThresholdChange();
-        tmpro.SetText("10%");
+        tmpro.SetText("5%");
     }
 }
