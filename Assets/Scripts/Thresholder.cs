@@ -10,13 +10,14 @@ public class Thresholder : MonoBehaviour
     public TextMeshPro tmpro;
     public UnityEngine.UI.Slider slider;
 
-    public float threshold = 0.1f;
+    public float threshold = 0.05f;
 
     // Start is called before the first frame update
     private void Start()
     {
-        brain.GetComponent<ReadCSV>().threshold = 0.05f;
+        brain.GetComponent<ReadCSV>().threshold = threshold;
         brain.GetComponent<ReadCSV>().OnThresholdChange();
+        tmpro.SetText(new StringBuilder().Append((threshold*100).ToString("0.00")).Append("%").ToString());
     }
 
     // Update is called once per frame
@@ -46,8 +47,8 @@ public class Thresholder : MonoBehaviour
     public void OnReset()
     {
         slider.SetValueWithoutNotify(25);
-        brain.GetComponent<ReadCSV>().threshold = 0.05f;
+        brain.GetComponent<ReadCSV>().threshold = threshold;
         brain.GetComponent<ReadCSV>().OnThresholdChange();
-        tmpro.SetText("5%");
+        tmpro.SetText(new StringBuilder().Append((threshold*100).ToString("0.00")).Append("%").ToString());
     }
 }
