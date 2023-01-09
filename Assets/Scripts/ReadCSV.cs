@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
 public class ReadCSV : MonoBehaviour
@@ -23,6 +25,7 @@ public class ReadCSV : MonoBehaviour
     public bool edgeColoring = false;
     public bool shadowEffect = false;
     public float threshold = 0.05f;
+    private string shortestPathAlg = "Hops";
     public Color defaultColor = Color.black;
 
     [Tooltip("The file that contains algorithm results")]
@@ -474,6 +477,7 @@ public class ReadCSV : MonoBehaviour
 
     public void OnThresholdChange()
     {
+        shortestPathAlg = "Hops";
         resetNodesEmission();
         for (var i = 0; i < nodes.Count && i < 360; i++)
         {
@@ -516,9 +520,18 @@ public class ReadCSV : MonoBehaviour
         
         Debug.unityLogger.Log(LogType.Error, selectedNodes.Count);
         foreach (var node in selectedNodes) Debug.unityLogger.Log(LogType.Warning, node.regionName);
-        floydhopsFile = Resources.Load<TextAsset>("floyd_shortest_paths_hops");
-        floydsplFile = Resources.Load<TextAsset>("floyd_shortest_paths_spl");
-        floydpmatFile = Resources.Load<TextAsset>("floyd_shortest_paths_pmat");
+        if (shortestPathAlg.Equals("Hops"))
+        {
+            floydhopsFile = Resources.Load<TextAsset>("floyd_shortest_paths_hops_hops");
+            floydsplFile = Resources.Load<TextAsset>("floyd_shortest_paths_hops_spl");
+            floydpmatFile = Resources.Load<TextAsset>("floyd_shortest_paths_hops_pmat");
+        }
+        else
+        {
+            floydhopsFile = Resources.Load<TextAsset>("floyd_shortest_paths_dist_hops");
+            floydsplFile = Resources.Load<TextAsset>("floyd_shortest_paths_dist_spl");
+            floydpmatFile = Resources.Load<TextAsset>("floyd_shortest_paths_dist_pmat");
+        }
         diableAllOtherEdges();
         var startingNode = selectedNodes[0].nodeId-1;
         var targetNode = selectedNodes[1].nodeId-1;
@@ -660,5 +673,18 @@ public class ReadCSV : MonoBehaviour
     {
         showAllEdges = toggle;
         OnThresholdChange();
+    }
+    
+    public void DropDownAlgChanged(TMP_Dropdown d)
+    {
+        switch (d.options[d.value].text)
+        {
+            case "Hops":
+                shortestPathAlg = "Hops";
+                break;
+            case "Distance":
+                shortestPathAlg = "Dist";
+                break;
+        }
     }
 }

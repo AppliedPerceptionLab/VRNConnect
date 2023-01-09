@@ -110,10 +110,17 @@ pd.DataFrame.from_records(breadth_dist[1]).to_json(f'{res_path}{bfsFileName}.jso
 pd.DataFrame.from_records(breadth_dist[1]).to_csv(f'{res_path}{bfsFileName}.csv')
 pd.DataFrame.from_records(breadth_dist[1]).to_csv(f'{res_path}{bfsFileName}.txt')
 
-floyd_shortest_paths = bct.distance_wei_floyd(ndarray_main_threshold_abs_bin)
-print(floyd_shortest_paths)
-floydFileName = 'floyd_shortest_paths'
-pd.DataFrame.from_records(floyd_shortest_paths[0]).to_csv(f'{res_path}{floydFileName}_spl.csv')
-pd.DataFrame.from_records(floyd_shortest_paths[1]).to_csv(f'{res_path}{floydFileName}_hops.csv')
-pd.DataFrame.from_records(floyd_shortest_paths[2]).to_csv(f'{res_path}{floydFileName}_pmat.csv')
+floyd_shortest_paths_hops = bct.distance_wei_floyd(ndarray_main_threshold_abs_bin)
+print(floyd_shortest_paths_hops)
+floydFileName = 'floyd_shortest_paths_hops'
+pd.DataFrame.from_records(floyd_shortest_paths_hops[0]).to_csv(f'{res_path}{floydFileName}_spl.csv')
+pd.DataFrame.from_records(floyd_shortest_paths_hops[1]).to_csv(f'{res_path}{floydFileName}_hops.csv')
+pd.DataFrame.from_records(floyd_shortest_paths_hops[2]).to_csv(f'{res_path}{floydFileName}_pmat.csv')
+
+floyd_shortest_paths_dist = bct.distance_wei_floyd(ndarray_main_threshold_abs, 'inv')
+print(floyd_shortest_paths_dist)
+floydFileName = 'floyd_shortest_paths_dist'
+pd.DataFrame.from_records(floyd_shortest_paths_dist[0]).to_csv(f'{res_path}{floydFileName}_spl.csv')
+pd.DataFrame.from_records(floyd_shortest_paths_dist[1]).to_csv(f'{res_path}{floydFileName}_hops.csv')
+pd.DataFrame.from_records(floyd_shortest_paths_dist[2]).to_csv(f'{res_path}{floydFileName}_pmat.csv')
 
