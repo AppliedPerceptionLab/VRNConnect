@@ -1,4 +1,3 @@
-using System;
 using UnityEditor.Scripting.Python;
 using UnityEngine;
 using UnityEditor;
@@ -12,7 +11,7 @@ public class PyRunnerEditor : Editor
 
         RunPython script = (RunPython)target;
 
-        if (GUILayout.Button("rerun scripts"))
+        if (GUILayout.Button("Re-Run Python scripts"))
         {
             if (script.runMainScript)
             {
@@ -22,10 +21,6 @@ public class PyRunnerEditor : Editor
             {
                 runDistance();
             }
-            // if (script.runPathScript)
-            // {
-            //     runPathScript();
-            // }
         }
     }
 
