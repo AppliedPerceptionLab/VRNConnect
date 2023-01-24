@@ -28,15 +28,15 @@ public class Thresholder : MonoBehaviour
     public void OnValueChanged(float newValue)
     {
         float currentThreshold;
-        if (newValue > 50)
-        {
-            currentThreshold = (float)Math.Log10(newValue * 10) / 10;
-            Debug.Log("currentThreshold = " + currentThreshold);
-        }
-        else
-        {
+        // if (newValue > 50)
+        // {
+        //     currentThreshold = (float)Math.Log10(newValue * 10) / 10;
+        //     Debug.Log("currentThreshold = " + currentThreshold);
+        // }
+        // else
+        // {
             currentThreshold = newValue / 500;
-        }
+        // }
         
         Debug.Log("currentThreshold = " + currentThreshold);
         brain.GetComponent<ReadCSV>().threshold = currentThreshold;
