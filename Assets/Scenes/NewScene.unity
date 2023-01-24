@@ -2960,8 +2960,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6206504825fdab64a8c55a05a8ed8eac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resetRigPosition: 1
+  Scaler: {fileID: 1225977612}
+  MyRig: {fileID: 1851720858}
+  Thresholder: {fileID: 1373040389}
+  BrainParent: {fileID: 1476226523}
   UserID: 1
+  resetRigPosition: 1
+  resetThreshold: 0
+  resetScale: 0
+  resetBrainRotation: 0
 --- !u!114 &656816946
 MonoBehaviour:
   m_ObjectHideFlags: 0

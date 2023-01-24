@@ -5,8 +5,18 @@ using UnityEngine;
 
 public class UserStudyScript : MonoBehaviour
 {
-    public Boolean resetRigPosition = true;
+    public GameObject Scaler;
+    public GameObject MyRig;
+    public GameObject Thresholder;
+    public GameObject BrainParent;
+
     public int UserID = 1;
+
+    public Boolean resetRigPosition = true;
+    public Boolean resetThreshold = false;
+    public Boolean resetScale = false;
+    public Boolean resetBrainRotation = false;
+
     private int timerMilisec;
     private int mistakes;
     private UserStudyResults result;
@@ -14,33 +24,53 @@ public class UserStudyScript : MonoBehaviour
     private bool task1Finish = false;
     private bool task2Finish = false;
 
+
     public void Start()
     {
         fileName = $"{Application.dataPath}/results.csv";
     }
 
-    public void RestFunction()
+    public void RestFunction(bool isHardReset = false)
     {
-        Debug.unityLogger.Log(LogType.Warning, $"resetRigPosition = {resetRigPosition}");
-        timerMilisec = 0;
-        mistakes = 0;
-        //throw new NotImplementedException();
-    }
-    
-    public void ThresholdFunction()
-    {
-        throw new NotImplementedException();
-    }
-    
-    public void ScaleFunction()
-    {
-        throw new NotImplementedException();
+        if (isHardReset)
+        {
+            timerMilisec = 0;
+            mistakes = 0;
+            MyRig.GetComponent<ResetRig>().ResetTransform();
+            Scaler.GetComponent<Scaler>().OnReset();
+            Thresholder.GetComponent<Thresholder>().OnReset();
+            BrainParent.GetComponent<BrainRotator>().OnReset();
+        }
+        else
+        {
+            timerMilisec = 0;
+            mistakes = 0;
+            if (resetRigPosition)
+            {
+                MyRig.GetComponent<ResetRig>().ResetTransform();
+            }
+
+            if (resetScale)
+            {
+                Scaler.GetComponent<Scaler>().OnReset();
+            }
+
+            if (resetThreshold)
+            {
+                Thresholder.GetComponent<Thresholder>().OnReset();
+            }
+
+            if (resetBrainRotation)
+            {
+                BrainParent.GetComponent<BrainRotator>().OnReset();
+            }
+        }
+        
     }
 
     public void RunUserStudy()
     {
-        Debug.unityLogger.Log(LogType.Warning, $"RunUserStudy (with the following parameters):\n1.resetRigPosition = {resetRigPosition}");
-        RestFunction();
+        RestFunction(true);
         UserID += 1000;
         result = new UserStudyResults();
         result.UID = UserID;
@@ -76,7 +106,8 @@ public class UserStudyScript : MonoBehaviour
             if (UserID == 1000)
             {
                 tw = new StreamWriter(fileName, false);
-                tw.WriteLine("UID, TimeMilisecTask1, MistakesTask1, TimeMilisecTask2, MistakesTask2, StartByHand, StartByController");
+                tw.WriteLine(
+                    "UID, TimeMilisecTask1, MistakesTask1, TimeMilisecTask2, MistakesTask2, StartByHand, StartByController");
                 tw.Close();
             }
             else
@@ -91,17 +122,17 @@ public class UserStudyScript : MonoBehaviour
                     .Append(result.StartByHand).Append(",")
                     .Append(result.StartByController);
                 tw.WriteLine(str.ToString());
-                tw.Close();   
+                tw.Close();
             }
         }
     }
 
     private bool allTasksFinished()
     {
-
         if (!task1Finish || !task2Finish)
         {
-            Debug.unityLogger.Log(LogType.Warning, $"WriteCSV Error task1Finish = {task1Finish}, task2Finish = {task2Finish}");
+            Debug.unityLogger.Log(LogType.Warning,
+                $"WriteCSV Error task1Finish = {task1Finish}, task2Finish = {task2Finish}");
             return false;
         }
 
