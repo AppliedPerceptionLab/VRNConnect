@@ -2961,6 +2961,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resetRigPosition: 1
+  UserID: 1
 --- !u!114 &656816946
 MonoBehaviour:
   m_ObjectHideFlags: 0

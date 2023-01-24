@@ -19,5 +19,10 @@ public class UserStudyEditor : Editor
         {
             script.RunUserStudy();
         }
+        
+        if (GUILayout.Button("WriteResults"))
+        {
+            script.WriteCSV();
+        }
     }
 }
