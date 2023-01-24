@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class UserStudyScripts : MonoBehaviour
+public class UserStudyScript : MonoBehaviour
 {
     public Boolean resetRigPosition = true;
     public void RestFunction()
@@ -19,9 +19,11 @@ public class UserStudyScripts : MonoBehaviour
     {
         throw new NotImplementedException();
     }
-    
-    public void TestFunction()
+
+    public void RunUserStudy()
     {
+        Debug.unityLogger.Log(LogType.Warning, $"RunUserStudy (with the following parameters):\n1.resetRigPosition = {resetRigPosition}");
+        RestFunction();
         throw new NotImplementedException();
     }
 }
