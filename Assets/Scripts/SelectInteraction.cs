@@ -7,7 +7,6 @@ public class SelectInteraction : MonoBehaviour
     public bool nodeSelected = false;
     private Color defaultColor;
 
-    //TODO fix the bug with selection/hovering over 2,3 nodes in a straight line
     public void OnHoverOver()
     {
         GetComponent<Renderer>().material.EnableKeyword("_EMISSION");

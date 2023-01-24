@@ -8,6 +8,8 @@ public class TooltipUI : MonoBehaviour
     private Transform backgroundTransform;
     private Func<string> getTooltipTextFunc;
     private TextMeshPro textMeshPro;
+    private bool isHand = false;
+    private bool isController = true;
     public static TooltipUI instance { get; private set; }
 
     // Start is called before the first frame update
@@ -84,5 +86,13 @@ public class TooltipUI : MonoBehaviour
         this.getTooltipTextFunc = getTooltipTextFunc;
         gameObject.SetActive(true);
         SetText(getTooltipTextFunc());
+    }
+
+    public void SetControllerType(bool isController, bool isHand)
+    {
+        this.isHand = isHand;
+        this.isController = isController;
+        Debug.unityLogger.Log(LogType.Warning,
+            $"TooltipUI Hands = {isHand}, controllers = {isController}");
     }
 }
