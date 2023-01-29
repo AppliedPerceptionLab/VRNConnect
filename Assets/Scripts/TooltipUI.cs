@@ -85,6 +85,14 @@ public class TooltipUI : MonoBehaviour
     {
         this.getTooltipTextFunc = getTooltipTextFunc;
         gameObject.SetActive(true);
+        if (isHand)
+        {
+            gameObject.transform.localPosition = new Vector3(0.1f, -0.1f, 0.2f);
+        }
+        else
+        {
+            gameObject.transform.localPosition = new Vector3(0.0f, 0.15f, 0.2f);
+        }
         SetText(getTooltipTextFunc());
     }
 
