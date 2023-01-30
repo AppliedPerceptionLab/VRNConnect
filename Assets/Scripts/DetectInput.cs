@@ -8,6 +8,7 @@ public class DetectInput : MonoBehaviour
     private bool isHandActive = false;
     private bool isControllerActive = false;
     public TooltipUI tooltip;
+    public HintTooltipUI hintTooltipUI;
     void Start()
     {
         isHandActive = OVRInput.GetConnectedControllers() == OVRInput.Controller.Hands;
@@ -29,6 +30,7 @@ public class DetectInput : MonoBehaviour
                 isControllerActive = true;
                 isHandActive = false;
                 tooltip.SetControllerType(isControllerActive, isHandActive);
+                hintTooltipUI.SetControllerType(isControllerActive, isHandActive);
                 break;
             }
             case false when currentHandState:
@@ -37,6 +39,7 @@ public class DetectInput : MonoBehaviour
                 isControllerActive = false;
                 isHandActive = true;
                 tooltip.SetControllerType(isControllerActive, isHandActive);
+                hintTooltipUI.SetControllerType(isControllerActive, isHandActive);
                 break;
             }
         }
