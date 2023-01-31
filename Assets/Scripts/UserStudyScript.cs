@@ -1,8 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
+using Debug = UnityEngine.Debug;
 
 public class UserStudyScript : MonoBehaviour
 {
@@ -26,13 +30,15 @@ public class UserStudyScript : MonoBehaviour
     private bool runUserStudy = false;
     private static List<Task> tasks = new List<Task>();
     private int totalTaskIndex = 0;
+    private Stopwatch stopwatch;
 
 
     public void Start()
     {
         fileName = $"{Application.dataPath}/results.csv";
-        GameObject.Find("Finish").SetActive(false);
+        GameObject.Find("Finish").GetComponent<Button>().interactable = false;
         GameObject.Find("Next").SetActive(true);
+        stopwatch = new Stopwatch();
     }
 
     public void Update()
@@ -43,7 +49,6 @@ public class UserStudyScript : MonoBehaviour
     private bool taksHandlerNext()
     {
         BrainParent.GetComponentInChildren<ReadCSV>().setUserStudyMode(true);
-        var stopwatch = new System.Diagnostics.Stopwatch();
         RestFunction(true);
         if (totalTaskIndex == 0)
         {
@@ -62,6 +67,7 @@ public class UserStudyScript : MonoBehaviour
             tasks[totalTaskIndex - 1].taskTime = timerMilisec;
             tasks[totalTaskIndex - 1].taskClicks = NumberOfClicks;
             
+            stopwatch.Start();
             BrainParent.GetComponentInChildren<ReadCSV>().colorizeNode(tasks[totalTaskIndex].node);
             HintTooltipUI.ShowTooltip_Static(tasks[totalTaskIndex].GetTooltipText);
             totalTaskIndex++;
@@ -262,6 +268,8 @@ public class UserStudyScript : MonoBehaviour
                 {
                     runUserStudy = false;
                     totalTaskIndex = 0;
+                    GameObject.Find("Finish").GetComponent<Button>().interactable = true;
+                    GameObject.Find("Next").GetComponent<Button>().interactable = false;
                     WriteCSV();
                 }
             }

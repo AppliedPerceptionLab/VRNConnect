@@ -24,5 +24,15 @@ public class UserStudyEditor : Editor
         {
             script.WriteCSV(true);
         }
+        
+        if (GUILayout.Button("OnNext()"))
+        {
+            script.onNextClicked();
+        }
+        
+        if (GUILayout.Button("OnFinish()"))
+        {
+            script.onFinishClicked();
+        }
     }
 }
