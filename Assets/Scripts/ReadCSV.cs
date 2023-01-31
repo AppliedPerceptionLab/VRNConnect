@@ -1,11 +1,8 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Text;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using Debug = UnityEngine.Debug;
+using UnityEngine.Rendering;
 
 public class ReadCSV : MonoBehaviour
 {
@@ -16,14 +13,20 @@ public class ReadCSV : MonoBehaviour
 
     public static List<Edge> edges = new();
 
+    /**
+     * if it is userStudy mode, disable reset button, disable show allEdgesToggle
+     * make nodes black$white
+     */
+    public bool userStudyMode;
+
     //private Graph<Vector3, float> graph;
     //public Vector3 CenterOfMass = new Vector3(0.0f, 0.0f, 0.0f);
     public Vector3 scale = new(50.0f, 50.0f, 50.0f);
 
     // public Vector3 rotate = new(90.0f, 0.0f, 0.0f);
     public Vector3 sphereSize = new(0.05f, 0.05f, 0.05f);
-    public bool edgeColoring = false;
-    public bool shadowEffect = false;
+    public bool edgeColoring;
+    public bool shadowEffect;
     public float threshold = 0.05f;
     private string shortestPathAlg = "Hops";
     public Color defaultColor = Color.black;
@@ -48,26 +51,26 @@ public class ReadCSV : MonoBehaviour
 
     [Tooltip("The file that contains shortest distances")]
     private TextAsset distFile;
-    
+
     [Tooltip("The file that contains Floyd alg results for shortest paths length")]
     private TextAsset floydsplFile;
-    
+
     [Tooltip("The file that contains Floyd alg results for pmat")]
     private TextAsset floydpmatFile;
-    
+
     [Tooltip("The file that contains Floyd alg results for hops")]
     private TextAsset floydhopsFile;
 
-    private float maxEdgeSize = 0f;
+    private float maxEdgeSize;
 
-    private int nodesSelected = 0;
+    private int nodesSelected;
     /*private float weiAss;
     private float binAss;
     private float minDist;
     private float maxDist;*/
 
     private bool showAllEdges = true;
-    public bool ShownFlag { get; private set; } = false;
+    public bool ShownFlag { get; private set; }
 
     // Start is called before the first frame update
     private void Start()
@@ -76,14 +79,14 @@ public class ReadCSV : MonoBehaviour
         atlas = Resources.Load<TextAsset>("HCP-MMP1_UniqueRegionList");
         atlasColors = Resources.Load<TextAsset>("HCP-MMP1_RegionColor");
 
-        var Node = brainSC.text.Split(new char[] { '\n' });
-        var AtlasNode = atlas.text.Split(new char[] { '\n' });
-        var AtlasNodeColor = atlasColors.text.Split(new char[] { '\n' });
+        var Node = brainSC.text.Split(new[] { '\n' });
+        var AtlasNode = atlas.text.Split(new[] { '\n' });
+        var AtlasNodeColor = atlasColors.text.Split(new[] { '\n' });
         // Debug.Log(Node.Length);
 
         for (var i = 0; i < Node.Length - 1; i++)
         {
-            var Node2 = Node[i].Split(new char[] { ' ' });
+            var Node2 = Node[i].Split(new[] { ' ' });
             var n = new Node();
             n.nodeId = i + 1;
             n.NodeConnection = Node2;
@@ -92,7 +95,7 @@ public class ReadCSV : MonoBehaviour
 
         for (var i = 1; i < AtlasNode.Length - 1; i++)
         {
-            var atlasRow = AtlasNode[i].Split(new char[] { ',' });
+            var atlasRow = AtlasNode[i].Split(new[] { ',' });
             nodes[i - 1].regionName = atlasRow[0];
             nodes[i - 1].regionLongName = atlasRow[1];
             nodes[i - 1].regionIdLabel = atlasRow[2];
@@ -110,7 +113,7 @@ public class ReadCSV : MonoBehaviour
 
         for (var i = 1; i < AtlasNodeColor.Length - 1; i++)
         {
-            var colorRow = AtlasNodeColor[i].Split(new char[] { ',' });
+            var colorRow = AtlasNodeColor[i].Split(new[] { ',' });
             float.TryParse(colorRow[2], out nodes[i - 1].Red);
             float.TryParse(colorRow[3], out nodes[i - 1].Green);
             float.TryParse(colorRow[4], out nodes[i - 1].Blue);
@@ -190,7 +193,9 @@ public class ReadCSV : MonoBehaviour
                 //Using a material from assets with GPU instancing on
                 temp.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/SphereB");
                 temp.GetComponent<MeshRenderer>().material.SetColor("_Color",
-                    new Color(n.Red / 255f, n.Green / 255f, n.Blue / 255f, n.Alpha / 255f));
+                    !userStudyMode
+                        ? new Color(n.Red / 255f, n.Green / 255f, n.Blue / 255f, n.Alpha / 255f)
+                        : Color.black);
                 //temp.GetComponent<MeshRenderer>().receiveShadows = false;
                 temp.transform.localScale = getSphereSize();
                 temp.transform.position = scaleVector3(new Vector3(n.xCog, n.yCog, n.zCog));
@@ -242,9 +247,17 @@ public class ReadCSV : MonoBehaviour
                     edge.edgeId = id++;
                     edge.node1Id = n.nodeId;
                     edge.node2Id = e.nodeId;
-                    var color1 = new Color(n.Red / 255f, n.Green / 255f, n.Blue / 255f, n.Alpha / 255f);
-                    var color2 = new Color(e.Red / 255f, e.Green / 255f, e.Blue / 255f, e.Alpha / 255f);
-                    edge.edgeColor = CreateGradient(color1, color2);
+                    if (!userStudyMode)
+                    {
+                        var color1 = new Color(n.Red / 255f, n.Green / 255f, n.Blue / 255f, n.Alpha / 255f);
+                        var color2 = new Color(e.Red / 255f, e.Green / 255f, e.Blue / 255f, e.Alpha / 255f);
+                        edge.edgeColor = CreateGradient(color1, color2);
+                    }
+                    else
+                    {
+                        edge.edgeColor = Color.black;
+                    }
+
                     edge.start = start;
                     edge.end = end;
                     edge.offset = offset;
@@ -295,7 +308,7 @@ public class ReadCSV : MonoBehaviour
         edgeObj.SetActive(true);
         edgeObj.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/EdgeR");
         edgeObj.GetComponent<MeshRenderer>().material.SetColor("_Color", defaultColor);
-        edgeObj.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        edgeObj.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.Off;
         edgeObj.GetComponent<MeshRenderer>().receiveShadows = false;
         edgeObj.name = edge.name;
         edgeObj.transform.position = edge.start + edge.offset / 2.0f;
@@ -364,13 +377,13 @@ public class ReadCSV : MonoBehaviour
                                 e.gameObject.GetComponent<MeshRenderer>().material.SetColor("_Color", e.edgeColor);
                                 if (shadowEffect)
                                     e.gameObject.GetComponent<MeshRenderer>().shadowCastingMode =
-                                        UnityEngine.Rendering.ShadowCastingMode.On;
+                                        ShadowCastingMode.On;
                             }
                             else
                             {
                                 e.gameObject.GetComponent<MeshRenderer>().material.SetColor("_Color", defaultColor);
                                 e.gameObject.GetComponent<MeshRenderer>().shadowCastingMode =
-                                    UnityEngine.Rendering.ShadowCastingMode.Off;
+                                    ShadowCastingMode.Off;
                             }
                         }
 
@@ -403,7 +416,7 @@ public class ReadCSV : MonoBehaviour
         //Node not found
         return -1;
     }
-    
+
     private Node FindNodeByID(int nodeID)
     {
         foreach (var n in nodes)
@@ -447,13 +460,13 @@ public class ReadCSV : MonoBehaviour
         //distFile = Resources.Load<TextAsset>("breadth_distance");
         clusteringCoef = Resources.Load<TextAsset>("clustering_coef");
 
-        var results = algResults.text.Split(new char[] { '\n' });
+        var results = algResults.text.Split(new[] { '\n' });
         //string[] AtlasNode = atlas.text.Split(new char[] { '\n' });
-        var clustCoef = clusteringCoef.text.Split(new char[] { '\n' });
+        var clustCoef = clusteringCoef.text.Split(new[] { '\n' });
 
         for (var i = 1; i < clustCoef.Length - 1; i++)
         {
-            var Row = clustCoef[i].Split(new char[] { ',' });
+            var Row = clustCoef[i].Split(new[] { ',' });
             var nodeID = 0;
             int.TryParse(Row[0], out nodeID);
             float.TryParse(Row[1], out nodes[nodeID].clusteringCoef);
@@ -468,7 +481,7 @@ public class ReadCSV : MonoBehaviour
             }
             else
             {
-                var Row = results[i].Split(new char[] { ',' });
+                var Row = results[i].Split(new[] { ',' });
                 sb.AppendLine(Row[0] + ":\t" + Row[1] + "\t" + Row[2]);
             }
 
@@ -485,6 +498,10 @@ public class ReadCSV : MonoBehaviour
             nodes[i].nodeDegree = (int)calculateNodeDegree(n, true);
             nodes[i].nodeStrength = calculateNodeDegree(n, false);
             GameObject.Find(n.regionName).GetComponent<MeshRenderer>().material.DisableKeyword("_EMISSION");
+            if (userStudyMode)
+            {
+                GameObject.Find(n.regionName).GetComponent<MeshRenderer>().material.SetColor("_Color", Color.black);
+            }
             EnableEdgeOfNode(n.regionName, showAllEdges);
         }
     }
@@ -492,6 +509,7 @@ public class ReadCSV : MonoBehaviour
     public void addNodetoQueue(string nodeName)
     {
         Debug.unityLogger.Log(LogType.Warning, nodeName);
+        // HintTooltipUI.ShowTooltip_Static(nodeName);
         if (nodesSelected < numberOfSelections)
         {
             var n = FindNode(nodeName);
@@ -517,9 +535,13 @@ public class ReadCSV : MonoBehaviour
     private bool showPath()
     {
         //TODO have to modify this to show only shortest path
-        
-        Debug.unityLogger.Log(LogType.Error, selectedNodes.Count);
-        foreach (var node in selectedNodes) Debug.unityLogger.Log(LogType.Warning, node.regionName);
+
+        Debug.unityLogger.Log(selectedNodes.Count);
+        foreach (var node in selectedNodes)
+        {
+            Debug.unityLogger.Log(LogType.Warning, node.regionName);
+            // HintTooltipUI.ShowTooltip_Static(node.regionName);
+        }
         if (shortestPathAlg.Equals("Hops"))
         {
             floydhopsFile = Resources.Load<TextAsset>("floyd_shortest_paths_hops_hops");
@@ -532,22 +554,26 @@ public class ReadCSV : MonoBehaviour
             floydsplFile = Resources.Load<TextAsset>("floyd_shortest_paths_dist_spl");
             floydpmatFile = Resources.Load<TextAsset>("floyd_shortest_paths_dist_pmat");
         }
+
         diableAllOtherEdges();
-        var startingNode = selectedNodes[0].nodeId-1;
-        var targetNode = selectedNodes[1].nodeId-1;
-        var spl = floydsplFile.text.Split(new char[] { '\n' });
-        var sourceRow = spl[startingNode+1].Split(new char[] { ',' });
-        if (!sourceRow[targetNode+1].Equals("inf"))
+        var startingNode = selectedNodes[0].nodeId - 1;
+        var targetNode = selectedNodes[1].nodeId - 1;
+        var spl = floydsplFile.text.Split(new[] { '\n' });
+        var sourceRow = spl[startingNode + 1].Split(new[] { ',' });
+        if (!sourceRow[targetNode + 1].Equals("inf"))
         {
             calculatePath(startingNode, targetNode);
-            
-            var hops = floydhopsFile.text.Split(new char[] { '\n' });
-            var hopsRow = hops[startingNode+1].Split(new char[] { ',' });
-            Debug.unityLogger.Log(LogType.Warning, "Number of hops" + hopsRow[targetNode+1]);
+
+            var hops = floydhopsFile.text.Split(new[] { '\n' });
+            var hopsRow = hops[startingNode + 1].Split(new[] { ',' });
+            Debug.unityLogger.Log(LogType.Warning, "Number of hops" + hopsRow[targetNode + 1]);
+            // HintTooltipUI.ShowTooltip_Static("Number of hops" + hopsRow[targetNode + 1]);
         }
         else
         {
-            Debug.unityLogger.Log(LogType.Error, "There is no path between selected nodes" + startingNode + "and " + targetNode);
+            Debug.unityLogger.Log(LogType.Error,
+                "There is no path between selected nodes" + startingNode + "and " + targetNode);
+            // HintTooltipUI.ShowTooltip_Static("There is no path between selected nodes" + startingNode + "and " + targetNode);
         }
         //showSelectedNodesEdges();
 
@@ -556,31 +582,28 @@ public class ReadCSV : MonoBehaviour
 
     private void calculatePath(int startingNode, int targetNode)
     {
-        int nodeToCheck = startingNode;
+        var nodeToCheck = startingNode;
         List<Node> nodesInPath = new();
-        nodesInPath.Add(FindNodeByID(startingNode+1));
-        var pmat = floydpmatFile.text.Split(new char[] { '\n' });
-        
+        nodesInPath.Add(FindNodeByID(startingNode + 1));
+        var pmat = floydpmatFile.text.Split(new[] { '\n' });
+
         while (nodeToCheck != targetNode)
         {
-            var pmatRow = pmat[nodeToCheck+1].Split(new char[] { ',' });
-            int.TryParse(pmatRow[targetNode+1], out nodeToCheck);
-            nodesInPath.Add(FindNodeByID(nodeToCheck+1));
+            var pmatRow = pmat[nodeToCheck + 1].Split(new[] { ',' });
+            int.TryParse(pmatRow[targetNode + 1], out nodeToCheck);
+            nodesInPath.Add(FindNodeByID(nodeToCheck + 1));
         }
 
         drawShortestPath(nodesInPath);
-
     }
 
     private void drawShortestPath(List<Node> nodesInPath)
     {
-        for (int i = 0; i < nodesInPath.Count; i++)
-        {
+        for (var i = 0; i < nodesInPath.Count; i++)
             if (i != nodesInPath.Count - 1)
-            {
                 foreach (var e in edges)
                 {
-                    if (e.node1Id == nodesInPath[i].nodeId && e.node2Id == nodesInPath[i+1].nodeId)
+                    if (e.node1Id == nodesInPath[i].nodeId && e.node2Id == nodesInPath[i + 1].nodeId)
                     {
                         var width = CalculateWidth(e.strenght);
                         e.gameObject.transform.localScale = new Vector3(width, e.offset.magnitude / 2.0f, width);
@@ -590,7 +613,7 @@ public class ReadCSV : MonoBehaviour
                         highlightedEdge.Add(e);
                     }
 
-                    if (e.node1Id == nodesInPath[i+1].nodeId && e.node2Id == nodesInPath[i].nodeId)
+                    if (e.node1Id == nodesInPath[i + 1].nodeId && e.node2Id == nodesInPath[i].nodeId)
                     {
                         var width = CalculateWidth(e.strenght);
                         e.gameObject.transform.localScale = new Vector3(width, e.offset.magnitude / 2.0f, width);
@@ -600,10 +623,8 @@ public class ReadCSV : MonoBehaviour
                         highlightedEdge.Add(e);
                     }
                 }
-            }
-            // nodesInPath[i].gameObject.GetComponent<MeshRenderer>().material.EnableKeyword("_EMISSION");
-            // nodesInPath[i].gameObject.GetComponent<MeshRenderer>().transform.localScale *= 2;
-        }
+        // nodesInPath[i].gameObject.GetComponent<MeshRenderer>().material.EnableKeyword("_EMISSION");
+        // nodesInPath[i].gameObject.GetComponent<MeshRenderer>().transform.localScale *= 2;
     }
 
     //Not used for now
@@ -661,9 +682,7 @@ public class ReadCSV : MonoBehaviour
         }
 
         foreach (var e in highlightedEdge)
-        {
             e.gameObject.GetComponent<MeshRenderer>().material.DisableKeyword("_EMISSION");
-        }
 
         selectedNodes.Clear();
         highlightedEdge.Clear();
@@ -674,7 +693,7 @@ public class ReadCSV : MonoBehaviour
         showAllEdges = toggle;
         OnThresholdChange();
     }
-    
+
     public void DropDownAlgChanged(TMP_Dropdown d)
     {
         switch (d.options[d.value].text)
@@ -685,6 +704,22 @@ public class ReadCSV : MonoBehaviour
             case "Distance":
                 shortestPathAlg = "Dist";
                 break;
+        }
+    }
+
+    public void setUserStudyMode(bool active)
+    {
+        userStudyMode = active;
+    }
+
+    public void colorizeNode(string[] nodesToColorize)
+    {
+        foreach (var n in nodesToColorize)
+        {
+            Node temp = FindNode(n);
+            GameObject.Find(temp.regionName).GetComponent<MeshRenderer>().material.SetColor("_Color",
+                new Color(temp.Red / 255f, temp.Green / 255f, temp.Blue / 255f, temp.Alpha / 255f));
+            // GameObject.Find(temp.regionName).GetComponent<MeshRenderer>().material.EnableKeyword("_EMISSION");
         }
     }
 }

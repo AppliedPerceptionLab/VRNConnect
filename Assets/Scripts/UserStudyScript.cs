@@ -1,6 +1,7 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using UnityEngine;
 
 public class UserStudyScript : MonoBehaviour
@@ -17,17 +18,69 @@ public class UserStudyScript : MonoBehaviour
     public Boolean resetScale = false;
     public Boolean resetBrainRotation = false;
 
-    private int timerMilisec;
-    private int mistakes;
-    private UserStudyResults result;
+    private long timerMilisec;
+    private int NumberOfClicks;
+    private UserStudyResults result = new UserStudyResults();
     private string fileName;
-    private bool task1Finish = false;
-    private bool task2Finish = false;
+    private bool continueClicked = false;
+    private bool runUserStudy = false;
+    private static List<Task> tasks = new List<Task>();
+    private int totalTaskIndex = 0;
 
 
     public void Start()
     {
         fileName = $"{Application.dataPath}/results.csv";
+        GameObject.Find("Finish").SetActive(false);
+        GameObject.Find("Next").SetActive(true);
+    }
+
+    public void Update()
+    {
+        
+    }
+
+    private bool taksHandlerNext()
+    {
+        BrainParent.GetComponentInChildren<ReadCSV>().setUserStudyMode(true);
+        var stopwatch = new System.Diagnostics.Stopwatch();
+        RestFunction(true);
+        if (totalTaskIndex == 0)
+        {
+            stopwatch.Start();
+            BrainParent.GetComponentInChildren<ReadCSV>().colorizeNode(tasks[totalTaskIndex].node);
+            HintTooltipUI.ShowTooltip_Static(tasks[totalTaskIndex].GetTooltipText);
+            totalTaskIndex++;
+        }
+        else if (totalTaskIndex < tasks.Count)
+        {
+            stopwatch.Stop();
+            timerMilisec = stopwatch.ElapsedMilliseconds;
+            Debug.Log("Timer: " + stopwatch.ElapsedMilliseconds);
+            stopwatch.Reset();
+            tasks[totalTaskIndex - 1].taskFinish = true;
+            tasks[totalTaskIndex - 1].taskTime = timerMilisec;
+            tasks[totalTaskIndex - 1].taskClicks = NumberOfClicks;
+            
+            BrainParent.GetComponentInChildren<ReadCSV>().colorizeNode(tasks[totalTaskIndex].node);
+            HintTooltipUI.ShowTooltip_Static(tasks[totalTaskIndex].GetTooltipText);
+            totalTaskIndex++;
+        } else
+        {
+            stopwatch.Stop();
+            timerMilisec = stopwatch.ElapsedMilliseconds;
+            Debug.Log("Timer: " + stopwatch.ElapsedMilliseconds);
+            stopwatch.Reset();
+            tasks[totalTaskIndex - 1].taskFinish = true;
+            tasks[totalTaskIndex - 1].taskTime = timerMilisec;
+            tasks[totalTaskIndex - 1].taskClicks = NumberOfClicks;
+            
+            result.Tasks = tasks;
+            totalTaskIndex++;
+            return false;
+        }
+        
+        return true;
     }
 
     public void RestFunction(bool isHardReset = false)
@@ -35,7 +88,8 @@ public class UserStudyScript : MonoBehaviour
         if (isHardReset)
         {
             timerMilisec = 0;
-            mistakes = 0;
+            NumberOfClicks = 0;
+            continueClicked = false;
             MyRig.GetComponent<ResetRig>().ResetTransform();
             Scaler.GetComponent<Scaler>().OnReset();
             Thresholder.GetComponent<Thresholder>().OnReset();
@@ -44,7 +98,8 @@ public class UserStudyScript : MonoBehaviour
         else
         {
             timerMilisec = 0;
-            mistakes = 0;
+            NumberOfClicks = 0;
+            continueClicked = false;
             if (resetRigPosition)
             {
                 MyRig.GetComponent<ResetRig>().ResetTransform();
@@ -74,54 +129,104 @@ public class UserStudyScript : MonoBehaviour
         UserID += 1000;
         result = new UserStudyResults();
         result.UID = UserID;
-        task1Finish = false;
-        task2Finish = false;
-        runTask1();
-        runTask2();
+        totalTaskIndex = 0;
+        runUserStudy = true;
+        
+        tasks = createUserTasks(UserID%2==0);
+        taksHandlerNext();
     }
 
-    private void runTask1()
+    private List<Task> createUserTasks(bool shouldStartWithHand)
     {
-        RestFunction();
-        //TODO write the task here
-        result.TimeMilisecTask1 = timerMilisec;
-        result.MistakesTask1 = mistakes;
-        task1Finish = true;
+        result.StartByHand = shouldStartWithHand;
+        result.StartByController = !shouldStartWithHand;
+        List<Task> t = new List<Task>();
+        for (int i = 1; i <= 2; i++)
+        {
+            Task myTask;
+            switch (i)
+            {
+                case 1:
+                    for (int j = 0; j < 6; j++)
+                    {
+                        myTask = new Task();
+                        myTask.taskType = i;
+                        if (j<3)
+                        {
+                            myTask.interactionMethod = shouldStartWithHand? "_hand" : "_controller";
+                        }
+                        else
+                        {
+                            myTask.interactionMethod = shouldStartWithHand? "_controller" : "_hand";
+                        }
+                        switch (j % 3)
+                        {
+                            case 0 :
+                                myTask.node = new [] { "a9-46v_R" };
+                                myTask.detailToRead = "Lobe";
+                                break;
+                            case 1:
+                                myTask.node = new [] { "FOP3_L" };
+                                myTask.detailToRead = "Degree";
+                                break;
+                            case 2:
+                                myTask.node = new [] { "V2_R" };
+                                myTask.detailToRead = "Clustering Coefficient";
+                                break;
+                        }
+                        t.Add(myTask);
+                    }
+                    break;
+                case 2:
+                    for (int j = 0; j < 6; j++)
+                    {
+                        myTask = new Task();
+                        myTask.taskType = i;
+                        if (j<3)
+                        {
+                            myTask.interactionMethod = shouldStartWithHand? "_hand" : "_controller";
+                        }
+                        else
+                        {
+                            myTask.interactionMethod = shouldStartWithHand? "_controller" : "_hand";
+                        }
+                        switch (j % 3)
+                        {
+                            case 0 :
+                                myTask.node = new [] { "9-46d_R","TA2_R" };
+                                break;
+                            case 1:
+                                myTask.node = new [] { "10d_L","ProS_L" };
+                                break;
+                            case 2:
+                                myTask.node = new [] { "LO1_R","V1_R" };
+                                break;
+                        }
+                        myTask.detailToRead = "Count the Number of Hops";
+                        t.Add(myTask);
+                    }
+                    break;
+            }
+        }
+
+        return t;
     }
 
-    private void runTask2()
+    public void WriteCSV(bool forced = false)
     {
-        RestFunction();
-        //TODO write the task here
-        result.TimeMilisecTask2 = timerMilisec;
-        result.MistakesTask2 = mistakes;
-        task2Finish = true;
-    }
-
-    public void WriteCSV()
-    {
-        if (allTasksFinished())
+        if (allTasksFinished() || forced)
         {
             TextWriter tw;
-            if (UserID == 1000)
+            if (UserID == 0)
             {
                 tw = new StreamWriter(fileName, false);
-                tw.WriteLine(
-                    "UID, TimeMilisecTask1, MistakesTask1, TimeMilisecTask2, MistakesTask2, StartByHand, StartByController");
+                tw.WriteLine(result.getTitle());
                 tw.Close();
             }
             else
             {
                 tw = new StreamWriter(fileName, true);
-                StringBuilder str = new StringBuilder();
-                str.Append(result.UID).Append(",")
-                    .Append(result.TimeMilisecTask1).Append(",")
-                    .Append(result.TimeMilisecTask2).Append(",")
-                    .Append(result.MistakesTask1).Append(",")
-                    .Append(result.MistakesTask2).Append(",")
-                    .Append(result.StartByHand).Append(",")
-                    .Append(result.StartByController);
-                tw.WriteLine(str.ToString());
+                tw.WriteLine(result.getString());
                 tw.Close();
             }
         }
@@ -129,13 +234,47 @@ public class UserStudyScript : MonoBehaviour
 
     private bool allTasksFinished()
     {
-        if (!task1Finish || !task2Finish)
+        bool e = true;
+        foreach (var t in tasks)
         {
-            Debug.unityLogger.Log(LogType.Warning,
-                $"WriteCSV Error task1Finish = {task1Finish}, task2Finish = {task2Finish}");
-            return false;
+            if (!t.taskFinish)
+            {
+                e = false;
+            }
         }
 
-        return true;
+        if (e) return true;
+        Debug.unityLogger.Log(LogType.Warning,
+            $"WriteCSV Error tasks not finished");
+        return false;
+
+    }
+
+    public void onNextClicked()
+    {
+        continueClicked = true;
+        if (runUserStudy)
+        {
+            if (continueClicked)
+            {
+                //do something if user does click continue
+                if (!taksHandlerNext())
+                {
+                    runUserStudy = false;
+                    totalTaskIndex = 0;
+                    WriteCSV();
+                }
+            }
+        }
+    }
+
+    public void onFinishClicked()
+    {
+        runUserStudy = false;
+    }
+
+    public void getUserClicks()
+    {
+        NumberOfClicks++;
     }
 }

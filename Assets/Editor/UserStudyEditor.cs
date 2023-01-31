@@ -22,7 +22,7 @@ public class UserStudyEditor : Editor
         
         if (GUILayout.Button("WriteResults"))
         {
-            script.WriteCSV();
+            script.WriteCSV(true);
         }
     }
 }
