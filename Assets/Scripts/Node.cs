@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using UnityEngine;
 
@@ -44,12 +45,12 @@ public class Node
         sb.AppendLine("****" + regionName + "****");
         sb.AppendLine("Full Region Name : \t" + regionLongName);
         //sb.AppendLine("regionIdLabel : " + regionIdLabel);
-        sb.AppendLine("Lobe : \t\t\t" + Lobe);
+        sb.AppendLine("Lobe : \t\t\t" + getLobe(Lobe));
         sb.AppendLine("Left/Right: \t\t\t" + LR);
         sb.AppendLine("Region : \t\t\t" + region);
         sb.AppendLine("Cortex : \t\t\t" + cortex);
         //sb.AppendLine("regionID : " + regionID.ToString());
-        sb.AppendLine("CortexID : \t\t\t" + CortexID.ToString());
+        sb.AppendLine("Cortex ID : \t\t\t" + CortexID.ToString());
         //sb.AppendLine(xCog.ToString());
         //sb.AppendLine(yCog.ToString());
         //sb.AppendLine(zCog.ToString());
@@ -63,5 +64,24 @@ public class Node
         sb.AppendLine("Clustering Coefficient : \t" + clusteringCoef.ToString());
 
         return sb.ToString();
+    }
+
+    private string getLobe(string lobe)
+    {
+        string l = lobe;
+        if (lobe.Equals("Occ"))
+        {
+            l = "Occipital";
+        } else if (lobe.Equals("Fr"))
+        {
+            l = "Frontal";
+        } else if (lobe.Equals("Par"))
+        {
+            l = "Parietal";
+        } else if (lobe.Equals("Temp"))
+        { 
+            l = "Temporal";
+        }
+        return l;
     }
 }
