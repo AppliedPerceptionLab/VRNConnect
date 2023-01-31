@@ -793,6 +793,7 @@ GameObject:
   m_Component:
   - component: {fileID: 83316481}
   - component: {fileID: 83316480}
+  - component: {fileID: 83316482}
   m_Layer: 0
   m_Name: Detect Controls
   m_TagString: Untagged
@@ -829,6 +830,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &83316482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83316479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc6faecf4ad1aeb4e96fc634b4b5d464, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uTest: {fileID: 616768134}
 --- !u!1 &142067346
 GameObject:
   m_ObjectHideFlags: 0

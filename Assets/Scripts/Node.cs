@@ -34,8 +34,7 @@ public class Node
 
     public float ConvertNodeConnection(string c)
     {
-        float res;
-        float.TryParse(c, out res);
+        float.TryParse(c, out var res);
         return res;
     }
 
