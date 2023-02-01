@@ -843,6 +843,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uTest: {fileID: 616768134}
+  handR: {fileID: 8910374460100278895}
 --- !u!1 &142067346
 GameObject:
   m_ObjectHideFlags: 0

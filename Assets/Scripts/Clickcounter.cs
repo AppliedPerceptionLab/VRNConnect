@@ -1,14 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
+using Oculus.Interaction.Input;
 using UnityEngine;
 
 public class Clickcounter : MonoBehaviour
 {
     // Start is called before the first frame update
     public UserStudyScript uTest;
+    public GameObject handR;
+    private Hand hand;
+    private bool controller_triggered = false;
+    private bool pinch_triggered = false;
     void Start()
     {
-        
+        hand = handR.GetComponent<Hand>();
     }
 
     // Update is called once per frame
@@ -17,20 +20,39 @@ public class Clickcounter : MonoBehaviour
         float triggerLeft = OVRInput.Get(OVRInput.RawAxis1D.LIndexTrigger); //Between 0-1
         
         float triggerRight = OVRInput.Get(OVRInput.RawAxis1D.RIndexTrigger);
+
+        // Debug.unityLogger.Log(LogType.Error,$"left:{triggerLeft} - right:{triggerRight}");
         
-        var hand = GetComponent<OVRHand>();
-        bool isIndexFingerPinching = hand.GetFingerIsPinching(OVRHand.HandFinger.Index);
-        float ringFingerPinchStrength = hand.GetFingerPinchStrength(OVRHand.HandFinger.Ring);
+        // var hand = GetComponent<OVRHand>();
+        float ringFingerPinchStrength = hand.GetFingerPinchStrength(HandFinger.Ring);
+        float indexFingerPinchStrength = hand.GetFingerPinchStrength(HandFinger.Index);
+        // Debug.unityLogger.Log(LogType.Error,$"ringFinger:{ringFingerPinchStrength} - indexFinger:{indexFingerPinchStrength}");
         
 
         if (triggerLeft > 0.9f || triggerRight > 0.9f)
         {
-            uTest.getUserClicks();
+            if (!controller_triggered)
+            {
+                uTest.getUserClicks();
+                controller_triggered = true;   
+            }
+        }
+        else if (triggerLeft < 0.2f || triggerRight < 0.2f)
+        {
+            controller_triggered = false;
         }
 
-        if (isIndexFingerPinching && ringFingerPinchStrength>0.8f)
+        if (indexFingerPinchStrength > 0.8f || ringFingerPinchStrength > 0.8f)
         {
-            uTest.getUserClicks();
+            if (!pinch_triggered)
+            {
+                uTest.getUserClicks();
+                pinch_triggered = true;
+            }
+        }
+        else if (indexFingerPinchStrength<0.3f || ringFingerPinchStrength < 0.3f)
+        {
+            pinch_triggered = false;
         }
     }
 }

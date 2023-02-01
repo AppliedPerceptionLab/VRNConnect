@@ -24,6 +24,7 @@ public class UserStudyScript : MonoBehaviour
 
     private long timerMilisec;
     private int NumberOfClicks;
+    private int prevNumberOfClicks;
     private UserStudyResults result = new UserStudyResults();
     private string fileName;
     private bool continueClicked = false;
@@ -49,6 +50,7 @@ public class UserStudyScript : MonoBehaviour
     private bool taksHandlerNext()
     {
         BrainParent.GetComponentInChildren<ReadCSV>().setUserStudyMode(true);
+        prevNumberOfClicks = NumberOfClicks;
         RestFunction(true);
         if (totalTaskIndex == 0)
         {
@@ -65,7 +67,7 @@ public class UserStudyScript : MonoBehaviour
             stopwatch.Reset();
             tasks[totalTaskIndex - 1].taskFinish = true;
             tasks[totalTaskIndex - 1].taskTime = timerMilisec;
-            tasks[totalTaskIndex - 1].taskClicks = NumberOfClicks;
+            tasks[totalTaskIndex - 1].taskClicks = prevNumberOfClicks;
             
             stopwatch.Start();
             BrainParent.GetComponentInChildren<ReadCSV>().colorizeNode(tasks[totalTaskIndex].node);
@@ -79,7 +81,7 @@ public class UserStudyScript : MonoBehaviour
             stopwatch.Reset();
             tasks[totalTaskIndex - 1].taskFinish = true;
             tasks[totalTaskIndex - 1].taskTime = timerMilisec;
-            tasks[totalTaskIndex - 1].taskClicks = NumberOfClicks;
+            tasks[totalTaskIndex - 1].taskClicks = prevNumberOfClicks;
             
             result.Tasks = tasks;
             totalTaskIndex++;

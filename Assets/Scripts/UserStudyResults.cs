@@ -100,6 +100,14 @@ public class UserStudyResults
         {
             if (t.taskType == tTaskType && t.interactionMethod == tInteractionMethod)
             {
+                // if (tTaskType == 1)
+                // {
+                //     click += t.taskClicks - 2;
+                // } 
+                // else if (tTaskType ==2)
+                // {
+                //     click += t.taskClicks - 3;
+                // }
                 click += t.taskClicks;
             }
             
