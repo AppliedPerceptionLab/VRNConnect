@@ -53,7 +53,6 @@ public class HintTooltipUI : MonoBehaviour
         backgroundTransform.localScale = new Vector3(textSize.x + padding.x, textSize.y + padding.y, 1f);
         textMeshPro.transform.localPosition = new Vector3(-textSize.x/2, 0f, -0.001f);
 
-        //TODO check if the size(height) is not bigger than transform y value
     }
 
     public static void ShowTooltip_Static(string tooltipText)

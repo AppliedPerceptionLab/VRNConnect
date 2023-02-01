@@ -17,6 +17,7 @@ public class HandleTutorial : MonoBehaviour
         prevbtn = prev.GetComponent<Button>();
 
         CreateTutorialList();
+        showHint(0);
     }
 
     private void CreateTutorialList()
@@ -25,7 +26,18 @@ public class HandleTutorial : MonoBehaviour
         prevbtn.interactable = false;
         index = 0;
         tutorialList = new List<string>();
-        throw new System.NotImplementedException();
+        string guide = "test1";
+        tutorialList.Add(guide);
+        guide = "test2";
+        tutorialList.Add(guide);
+        guide = "test3";
+        tutorialList.Add(guide);
+        guide = "test4";
+        tutorialList.Add(guide);
+        guide = "test5";
+        tutorialList.Add(guide);
+        guide = "test6";
+        tutorialList.Add(guide);
     }
 
     // Update is called once per frame
@@ -46,7 +58,23 @@ public class HandleTutorial : MonoBehaviour
     
     private void showHint(int offset)
     {
-        throw new System.NotImplementedException();
+        index += offset;
+        if (index == 0)
+        {
+            nextbtn.interactable = true;
+            prevbtn.interactable = false;
+        }
+        else if (index == tutorialList.Count -1)
+        {
+            nextbtn.interactable = false;
+            prevbtn.interactable = true;
+        }
+        else
+        {
+            nextbtn.interactable = true;
+            prevbtn.interactable = true;
+        }
+        HintTooltipUI.ShowTooltip_Static(tutorialList[index]);
     }
 
     public void onReset()
