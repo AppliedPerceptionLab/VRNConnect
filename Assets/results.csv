@@ -1,2 +1,1 @@
 UID, taskType, interactionMethod, taskTime_avg, taskClicks_avg, taskType, interactionMethod, taskTime_avg, taskClicks_avg, taskType, interactionMethod, taskTime_avg, taskClicks_avg, taskType, interactionMethod, taskTime_avg, taskClicks_avg, StartByHand, StartByController
-1001,Node Selection,_controller,11295,32,Node Selection,_hand,29842,591,Shortest Path,_controller,11764,22,Shortest Path,_hand,25768,17,False,True
