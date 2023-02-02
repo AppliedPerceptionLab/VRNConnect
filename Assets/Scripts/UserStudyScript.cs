@@ -210,7 +210,7 @@ public class UserStudyScript : MonoBehaviour
                                 myTask.node = new [] { "LO1_R","V1_R" };
                                 break;
                         }
-                        myTask.detailToRead = "Count the Number of Hops";
+                        myTask.detailToRead = "Count the Number of Connections";
                         t.Add(myTask);
                     }
                     break;

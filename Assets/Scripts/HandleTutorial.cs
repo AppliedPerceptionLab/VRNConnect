@@ -17,7 +17,6 @@ public class HandleTutorial : MonoBehaviour
         prevbtn = prev.GetComponent<Button>();
 
         CreateTutorialList();
-        showHint(0);
     }
 
     private void CreateTutorialList()
@@ -38,6 +37,7 @@ public class HandleTutorial : MonoBehaviour
         tutorialList.Add(guide);
         guide = "test6";
         tutorialList.Add(guide);
+        showHint(0);
     }
 
     // Update is called once per frame
