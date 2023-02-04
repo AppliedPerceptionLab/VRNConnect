@@ -25,18 +25,7 @@ public class HandleTutorial : MonoBehaviour
         prevbtn.interactable = false;
         index = 0;
         tutorialList = new List<string>();
-        string guide = "test1";
-        tutorialList.Add(guide);
-        guide = "test2";
-        tutorialList.Add(guide);
-        guide = "test3";
-        tutorialList.Add(guide);
-        guide = "test4";
-        tutorialList.Add(guide);
-        guide = "test5";
-        tutorialList.Add(guide);
-        guide = "test6";
-        tutorialList.Add(guide);
+        tutorialList = new Tutorial().steps;
         showHint(0);
     }
 
@@ -74,11 +63,14 @@ public class HandleTutorial : MonoBehaviour
             nextbtn.interactable = true;
             prevbtn.interactable = true;
         }
-        HintTooltipUI.ShowTooltip_Static(tutorialList[index]);
+        HintTooltipUI.ShowTooltip_Static(tutorialList[index] + $"\n({index+1}/{tutorialList.Count})");
     }
 
     public void onReset()
     {
-        CreateTutorialList();
+        if (index == tutorialList.Count - 1)
+        {
+            CreateTutorialList();
+        }
     }
 }
