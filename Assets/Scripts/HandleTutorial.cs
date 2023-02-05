@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class HandleTutorial : MonoBehaviour
@@ -7,14 +8,18 @@ public class HandleTutorial : MonoBehaviour
     // Start is called before the first frame update
     public GameObject next;
     public GameObject prev;
+    public GameObject runStudy;
     private Button nextbtn;
     private Button prevbtn;
+    private Button runStudybtn;
     private List<string> tutorialList;
     private int index = 0;
     void Start()
     {
         nextbtn = next.GetComponent<Button>();
         prevbtn = prev.GetComponent<Button>();
+        runStudybtn = runStudy.GetComponent<Button>();
+        runStudy.SetActive(false);
 
         CreateTutorialList();
     }
@@ -23,6 +28,7 @@ public class HandleTutorial : MonoBehaviour
     {
         nextbtn.interactable = false;
         prevbtn.interactable = false;
+        // runStudybtn.interactable = false;
         index = 0;
         tutorialList = new List<string>();
         tutorialList = new Tutorial().steps;
@@ -45,6 +51,11 @@ public class HandleTutorial : MonoBehaviour
         showHint(-1);
     }
     
+    public void onRunStudyClicked()
+    {
+        SceneManager.LoadScene("Scenes/UserStudyScene", LoadSceneMode.Single);
+    }
+    
     private void showHint(int offset)
     {
         index += offset;
@@ -57,6 +68,7 @@ public class HandleTutorial : MonoBehaviour
         {
             nextbtn.interactable = false;
             prevbtn.interactable = true;
+            // runStudybtn.interactable = true;
         }
         else
         {

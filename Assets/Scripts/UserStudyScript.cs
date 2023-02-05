@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
 using Debug = UnityEngine.Debug;
@@ -272,6 +273,7 @@ public class UserStudyScript : MonoBehaviour
                     totalTaskIndex = 0;
                     GameObject.Find("Finish").GetComponent<Button>().interactable = true;
                     GameObject.Find("Next").GetComponent<Button>().interactable = false;
+                    HintTooltipUI.ShowTooltip_Static("Congratulations You have done it.");
                     WriteCSV();
                 }
             }
@@ -281,6 +283,7 @@ public class UserStudyScript : MonoBehaviour
     public void onFinishClicked()
     {
         runUserStudy = false;
+        SceneManager.LoadScene("Scenes/MainScene", LoadSceneMode.Single);
     }
 
     public void getUserClicks()
