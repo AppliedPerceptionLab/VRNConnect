@@ -50,7 +50,7 @@ public class Clickcounter : MonoBehaviour
                 pinch_triggered = true;
             }
         }
-        else if (indexFingerPinchStrength<0.5f || ringFingerPinchStrength < 0.5f)
+        else if (indexFingerPinchStrength < 0.5f || ringFingerPinchStrength < 0.5f)
         {
             pinch_triggered = false;
         }

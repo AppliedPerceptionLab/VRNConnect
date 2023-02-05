@@ -170,11 +170,11 @@ public class UserStudyScript : MonoBehaviour
                         switch (j % 3)
                         {
                             case 0 :
-                                myTask.node = new [] { "a9-46v_R" };
+                                myTask.node = new [] { "6r_R" };
                                 myTask.detailToRead = "Lobe";
                                 break;
                             case 1:
-                                myTask.node = new [] { "FOP3_L" };
+                                myTask.node = new [] { "3a_L" };
                                 myTask.detailToRead = "Degree";
                                 break;
                             case 2:
@@ -201,10 +201,10 @@ public class UserStudyScript : MonoBehaviour
                         switch (j % 3)
                         {
                             case 0 :
-                                myTask.node = new [] { "9-46d_R","TA2_R" };
+                                myTask.node = new [] { "p24_R","TA2_R" };
                                 break;
                             case 1:
-                                myTask.node = new [] { "10d_L","ProS_L" };
+                                myTask.node = new [] { "MBelt_L","ProS_L" };
                                 break;
                             case 2:
                                 myTask.node = new [] { "LO1_R","V1_R" };
