@@ -37,7 +37,7 @@ public class Clickcounter : MonoBehaviour
                 controller_triggered = true;   
             }
         }
-        else if (triggerLeft < 0.2f || triggerRight < 0.2f)
+        else if (triggerLeft < 0.5f || triggerRight < 0.5f)
         {
             controller_triggered = false;
         }
@@ -50,7 +50,7 @@ public class Clickcounter : MonoBehaviour
                 pinch_triggered = true;
             }
         }
-        else if (indexFingerPinchStrength<0.3f || ringFingerPinchStrength < 0.3f)
+        else if (indexFingerPinchStrength<0.5f || ringFingerPinchStrength < 0.5f)
         {
             pinch_triggered = false;
         }
