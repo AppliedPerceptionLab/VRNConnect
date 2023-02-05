@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
 using Debug = UnityEngine.Debug;
+using Random = UnityEngine.Random;
 
 public class UserStudyScript : MonoBehaviour
 {
@@ -135,13 +136,14 @@ public class UserStudyScript : MonoBehaviour
     public void RunUserStudy()
     {
         RestFunction(true);
-        UserID += 1000;
         result = new UserStudyResults();
-        result.UID = UserID;
+        result.UID = UserID + 1000;
         totalTaskIndex = 0;
         runUserStudy = true;
-        
-        tasks = createUserTasks(UserID%2==0);
+
+        bool startWithHand = Random.Range(1, 101) % 2 == 0;
+        tasks = createUserTasks(startWithHand);
+        Debug.unityLogger.Log(LogType.Warning,$"startWithHand -> {startWithHand}");
         taksHandlerNext();
     }
 
