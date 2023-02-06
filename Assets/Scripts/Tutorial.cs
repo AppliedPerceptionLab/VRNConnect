@@ -20,7 +20,7 @@ public class Tutorial
         steps.Add("You can also rotate the brain \nusing the a/b or x/y buttons on the controller.\nTry it.");
         steps.Add("On your left, you can see an interface which shows different settings.");
         steps.Add("Try changing some of the settings and see the effect on the brain.");
-        steps.Add("You can also interact with your brain using your hands, \nfirst, you need to reset your field of view with the red reset button on top of the settings,\nthen put away your controllers.");
+        steps.Add("You can also interact with the brain using your hands, \nfirst, you need to reset your field of view with the red reset button on top of the settings,\nthen put away your controllers.");
         steps.Add("When using your hands,\nyou can select/deselect by pitching with your thumb and index/middle finger.\nTry it.");
         steps.Add("Pinching might be easier when you are close to the subject.");
         steps.Add("Last but not least, if you select 2 nodes,\nyou can see the shortest path between them.\nTry it.");

@@ -1,2 +1,11 @@
 UID, taskType, interactionMethod, taskTime_avg, taskClicks_avg, taskType, interactionMethod, taskTime_avg, taskClicks_avg, taskType, interactionMethod, taskTime_avg, taskClicks_avg, taskType, interactionMethod, taskTime_avg, taskClicks_avg, StartByHand, StartByController
 1001,Node Selection,_controller,17924,2,Node Selection,_hand,21378,2,Shortest Path,_controller,17846,3,Shortest Path,_hand,25016,3,FALSE,TRUE
+1002,Node Selection,_controller,40185,2,Node Selection,_hand,27501,2,Shortest Path,_controller,43672,3,Shortest Path,_hand,31995,4,FALSE,TRUE
+1003,Node Selection,_hand,56421,5,Node Selection,_controller,24029,2,Shortest Path,_hand,39556,4,Shortest Path,_controller,37757,3,TRUE,FALSE
+1004,Node Selection,_hand,43442,3,Node Selection,_controller,16822,2,Shortest Path,_hand,59102,9,Shortest Path,_controller,20831,3,TRUE,FALSE
+1005,Node Selection,_controller,21249,1,Node Selection,_hand,33047,2,Shortest Path,_controller,29542,3,Shortest Path,_hand,75141,6,FALSE,TRUE
+1006,Node Selection,_hand,63989,10,Node Selection,_controller,25111,2,Shortest Path,_hand,54460,7,Shortest Path,_controller,31325,3,TRUE,FALSE
+1007,Node Selection,_controller,26021,2,Node Selection,_hand,47162,3,Shortest Path,_controller,26892,4,Shortest Path,_hand,20100,3,FALSE,TRUE
+1008,Node Selection,_controller,18539,2,Node Selection,_hand,40457,3,Shortest Path,_controller,33299,5,Shortest Path,_hand,27840,3,FALSE,TRUE
+1009,Node Selection,_controller,24029,2,Node Selection,_hand,28564,2,Shortest Path,_controller,23151,2,Shortest Path,_hand,87767,11,False,True
+1010,Node Selection,_controller,39993,2,Node Selection,_hand,35661,2,Shortest Path,_controller,41834,3,Shortest Path,_hand,61258,6,False,True
