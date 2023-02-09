@@ -9,3 +9,9 @@ UID, taskType, interactionMethod, taskTime_avg, taskClicks_avg, taskType, intera
 1008,Node Selection,_controller,18539,2,Node Selection,_hand,40457,3,Shortest Path,_controller,33299,5,Shortest Path,_hand,27840,3,FALSE,TRUE
 1009,Node Selection,_controller,24029,2,Node Selection,_hand,28564,2,Shortest Path,_controller,23151,2,Shortest Path,_hand,87767,11,False,True
 1010,Node Selection,_controller,39993,2,Node Selection,_hand,35661,2,Shortest Path,_controller,41834,3,Shortest Path,_hand,61258,6,False,True
+1011,Node Selection,_hand,45462,4,Node Selection,_controller,21334,3,Shortest Path,_hand,73579,4,Shortest Path,_controller,28536,4,True,False
+1012,Node Selection,_hand,39800,7,Node Selection,_controller,17567,2,Shortest Path,_hand,34356,5,Shortest Path,_controller,23085,4,True,False
+1013,Node Selection,_hand,109748,8,Node Selection,_controller,34050,2,Shortest Path,_hand,57997,3,Shortest Path,_controller,33752,3,True,False
+1014,Node Selection,_hand,59859,3,Node Selection,_controller,20660,2,Shortest Path,_hand,54558,4,Shortest Path,_controller,34568,4,True,False
+1015,Node Selection,_hand,114950,18,Node Selection,_controller,18428,1,Shortest Path,_hand,56141,4,Shortest Path,_controller,24257,2,True,False
+1016,Node Selection,_hand,51072,3,Node Selection,_controller,28190,2,Shortest Path,_hand,47011,4,Shortest Path,_controller,23489,3,True,False
