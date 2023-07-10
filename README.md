@@ -28,9 +28,9 @@ The application development utilized Unity 2021.4 game engine and the Oculus Int
 
 In the application, connectivity data is loaded dynamically at runtime using a C# script in Unity. This script reads the corresponding CSV files and instantiates the objects (nodes/edges), calculates their center of mass, and assigns atlas region information and colours to each node, effectively generating the connectome graph. This feature allows users to load their own data, explore it, interact with it, and run analyses on it. To load their own data, users need to provide the following inputs:
 
-A CSV file containing the 2D connectivity matrix, either structural or functional.
-A CSV file containing the regions of the atlas and information about each region. It is crucial for this atlas parcellation to match the one used to create the connectivity matrix to ensure proper mapping of nodes/regions.
-A CSV file containing the colour-coding of regions in the brain atlas (optional). If not provided, all nodes will have the same grey colour.
+1. A CSV file containing the 2D connectivity matrix, either structural or functional.
+2. A CSV file containing the regions of the atlas and information about each region. It is crucial for this atlas parcellation to match the one used to create the connectivity matrix to ensure proper mapping of nodes/regions.
+3. A CSV file containing the colour-coding of regions in the brain atlas (optional). If not provided, all nodes will have the same grey colour.
 
 ![Flowchart - Frame 1](https://github.com/sepehrja/VRNConnect/assets/19148491/f62e5653-f025-4bbb-a311-8d37675773ca)
 
