@@ -10,12 +10,14 @@ Virtual reality technology has proven to be a versatile tool for learning, explo
 
 
 ## Requirements
+
 1. Meta Quest 2 VR headset
 2. Unity Game Engine 2021.4 or later
 3. Oculus Integration SDK v38
 4. IDE for Python v3 and C#
 
 ## Architecture
+
 The developed application, VR-Connect, allows users to input connectivity data and a brain parcellation file to visualize the results in virtual reality (VR). The application utilizes C# scripts and the Unity 3D game engine to create a brain connectivity network graph using a structural connectivity matrix. For graph analysis and network measurements, the Brain Connectivity Toolbox Python extension is employed. Interactions with the Oculus headset are facilitated through the Oculus integration SDK.
 
 To generate the connectivity data for input into VR-Connect, the authors followed the B.A.T.M.A.N tutorial, which involves tractography analysis and visualization using MR-trix3 and other optional packages. The process includes preprocessing steps such as denoising, unringing, motion and distortion correction. The fibre orientation distribution is estimated to determine the orientation of the fibres voxel by voxel. A whole brain tractogram is then created, and the results are normalized. Finally, the connectome construction step involves mapping the tractography data onto a brain atlas and identifying the connections between regions.
@@ -29,9 +31,11 @@ In the application, connectivity data is loaded dynamically at runtime using a C
 A CSV file containing the 2D connectivity matrix, either structural or functional.
 A CSV file containing the regions of the atlas and information about each region. It is crucial for this atlas parcellation to match the one used to create the connectivity matrix to ensure proper mapping of nodes/regions.
 A CSV file containing the colour-coding of regions in the brain atlas (optional). If not provided, all nodes will have the same grey colour.
+
 ![Flowchart - Frame 1](https://github.com/sepehrja/VRNConnect/assets/19148491/f62e5653-f025-4bbb-a311-8d37675773ca)
 
 ## Input Key bindings
+
 The application implements both controller-based and hand gesture-based interactions to enhance user convenience and versatility. These features were integrated using the Oculus integration SDK (v38). Although hand gesture detection is still in the early stages of development, the pinch gesture and controller trigger button were successfully implemented for node selection. The virtual visualization of the controller mesh object allows users to see the controls and buttons within the VR environment.
 
 Users can move around and rotate the brain connectivity object using the controller's Axis2D thumbstick buttons, providing a typical VR navigation experience. While object rotation via hand gestures is not currently supported, users can freely walk around and even enter the virtual brain. Additional controller interactions include rotating the brain using the buttons on the right/left controllers to adjust the viewing angle. The provided figure illustrates a sample of the Oculus controllers and their key bindings.
@@ -39,7 +43,9 @@ Users can move around and rotate the brain connectivity object using the control
 When a user points to a node with the laser (emitted from either the hand or controllers), the node is highlighted, and the user is presented with information about the region name and the corresponding name acquired from the parcellation. Selecting a node through a button press or pinch gesture triggers the display of an extended version of the node's data on a panel attached to the user's left hand.
 
 Another feature of the application is the ability to show the shortest path between two selected nodes. This is achieved through a Python script developed to handle intermediate data creation, process the algorithm, and publish the results back to Unity. Two different algorithms can be used to calculate the shortest path, which can be changed within the VR interface. One algorithm considers the weight of the edges using Floyd-Warshall's algorithm, while the other algorithm focuses on the least number of hops.
+
 ![Flowchart - Frame 28](https://github.com/sepehrja/VRNConnect/assets/19148491/3523642b-1ec5-4d6e-9403-516a274161b0)
 
 ## Screen Shots
+
 ![Flowchart - Frame 3 (1)](https://github.com/sepehrja/VRNConnect/assets/19148491/41307359-892b-46d1-b942-c81531c365bd)
