@@ -13,3 +13,11 @@ Virtual reality technology has proven to be a versatile tool for learning, explo
 3. Oculus Integration SDK v38
 4. IDE for Python v3 and C#
 
+## Architecture
+![Flowchart - Frame 1](https://github.com/sepehrja/VRNConnect/assets/19148491/f62e5653-f025-4bbb-a311-8d37675773ca)
+
+## Input Key bindings
+![Flowchart - Frame 28](https://github.com/sepehrja/VRNConnect/assets/19148491/3523642b-1ec5-4d6e-9403-516a274161b0)
+
+## Screen Shots
+![Flowchart - Frame 3 (1)](https://github.com/sepehrja/VRNConnect/assets/19148491/41307359-892b-46d1-b942-c81531c365bd)
