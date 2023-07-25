@@ -3,7 +3,7 @@
 The accepted version of the Master's Thesis can be found here:  [Immersive Virtual Reality Tool for Connectome Visualization and Analysis - 2023](https://spectrum.library.concordia.ca/id/eprint/991890/1/Jalayer_%20MCompSc_S2023.pdf)
 
 if you use VRNConnect in your research please cite:
-Jalayer, Sepehr  (2023) Immersive Virtual Reality Tool for Connectome Visualization and Analysis.  Masters thesis, Concordia University.   
+> Jalayer, Sepehr  (2023) Immersive Virtual Reality Tool for Connectome Visualization and Analysis.  Masters thesis, Concordia University.   
 
 
 The human brain is a complex organ made up of billions of neurons that are interconnected through a vast network of synapses. This network of connections enables the brain to perform a wide range of cognitive and motor functions. Studying and analyzing these brain networks is important for understanding how different regions of the brain communicate and work together to carry out specific tasks and how neurological disorders such as Alzheimer's disease, Parkinson's disease, or schizophrenia impact brain connectivity contributing to the development of these disorders. 
