@@ -4,6 +4,7 @@ The accepted version of the Master's Thesis can be found here:  [Immersive Virtu
 
 if you use VRNConnect in your research please cite:
 > Jalayer, Sepehr (2023) Immersive Virtual Reality Tool for Connectome Visualization and Analysis.  Masters thesis, Concordia University.
+> 
 > Jalayer, S., Xiao, Y., &amp; Kersten-Oertel, M. (2023). <i>VRNConnect: A virtual reality immersive environment for exploring brain connectivity data</i> (Version 0). TechRxiv.
 
 
