@@ -4,9 +4,8 @@ The accepted version of the Master's Thesis can be found here:  [Immersive Virtu
 
 if you use VRNConnect in your research please cite:
 > Jalayer, Sepehr (2023) Immersive Virtual Reality Tool for Connectome Visualization and Analysis.  Masters thesis, Concordia University.
-> 
-> Jalayer, S., Xiao, Y., & Kersten-Oertel, M. (2023). VRNConnect: A virtual reality immersive environment for exploring brain connectivity data (Version 1). TechRxiv. [https://doi.org/10.36227/techrxiv.24173016.v1](https://doi.org/10.36227/techrxiv.24173016.v1)
 
+<!--Jalayer, S., Xiao, Y., & Kersten-Oertel, M. (2023). VRNConnect: A virtual reality immersive environment for exploring brain connectivity data (Version 1). TechRxiv. [https://doi.org/10.36227/techrxiv.24173016.v1](https://doi.org/10.36227/techrxiv.24173016.v1)-->
 
 The human brain is a complex organ made up of billions of neurons that are interconnected through a vast network of synapses. This network of connections enables the brain to perform a wide range of cognitive and motor functions. Studying and analyzing these brain networks is important for understanding how different regions of the brain communicate and work together to carry out specific tasks and how neurological disorders such as Alzheimer's disease, Parkinson's disease, or schizophrenia impact brain connectivity contributing to the development of these disorders. 
 
