@@ -17,7 +17,7 @@ Virtual reality technology has proven to be a versatile tool for learning, explo
 ## Requirements
 
 1. Meta Quest 2 VR headset
-2. Unity Game Engine 2021.4 or later
+2. Unity Game Engine 2021.3.4f1 or later
 3. Oculus Integration SDK v38
 4. IDE for Python v3 and C#
 
