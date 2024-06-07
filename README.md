@@ -3,6 +3,8 @@
 The accepted version of the Master's Thesis can be found here:  [Immersive Virtual Reality Tool for Connectome Visualization and Analysis - 2023](https://spectrum.library.concordia.ca/id/eprint/991890/1/Jalayer_%20MCompSc_S2023.pdf)
 
 if you use VRNConnect in your research please cite:
+> S. Jalayer, Y. Xiao and M. Kersten-Oertel, "VRNConnect: Towards More Intuitive Interaction of 3D Brain Connectivity Data in Virtual Environments," 2024 IEEE Conference on Virtual Reality and 3D User Interfaces Abstracts and Workshops (VRW), Orlando, FL, USA, 2024, pp. 24-29, doi: 10.1109/VRW62533.2024.00011.
+> 
 > Jalayer, Sepehr (2023) Immersive Virtual Reality Tool for Connectome Visualization and Analysis.  Masters thesis, Concordia University.
 
 <!--Jalayer, S., Xiao, Y., & Kersten-Oertel, M. (2023). VRNConnect: A virtual reality immersive environment for exploring brain connectivity data (Version 1). TechRxiv. [https://doi.org/10.36227/techrxiv.24173016.v1](https://doi.org/10.36227/techrxiv.24173016.v1)-->
